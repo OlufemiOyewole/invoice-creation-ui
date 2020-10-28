@@ -1,4 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-horizontal-stepper.big-screen .mat-stepper-horizontal-line {
+  flex: 0;
+}
+
+mat-horizontal-stepper.big-screen .mat-horizontal-stepper-header-container {
+  justify-content: flex-end;
+}
+
+mat-horizontal-stepper .mat-horizontal-stepper-header-container {
+  margin-bottom: 24px;
+}
