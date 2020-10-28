@@ -24,3 +24,8 @@ mat-horizontal-stepper .mat-horizontal-stepper-header-container {
 mat-card.line-items .mat-card-header-text {
   margin: 0px;
 }
+
+.edit-summary .mat-list .mat-list-item .mat-list-item-content {
+  justify-content: flex-end;
+  padding: 0px;
+}

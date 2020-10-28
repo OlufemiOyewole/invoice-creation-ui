@@ -3,19 +3,59 @@
 >
 
 <mat-horizontal-stepper [ngClass]="{ 'big-screen': isBigScreen }">
-  <mat-step *ngIf="!isBigScreen" [stepControl]="invoiceFormGroup">
+  <mat-step
+    *ngIf="!isBigScreen"
+    [stepControl]="invoiceFormGroup"
+    errorMessage=""
+    #createOrEditStep
+  >
     <form [formGroup]="invoiceFormGroup" autocomplete="off">
-      <ng-template matStepLabel>Create</ng-template>
+      <ng-template matStepLabel>{{
+        createOrEditStep.interacted ? "Edit" : "Create"
+      }}</ng-template>
 
       <mat-card class="mat-elevation-z0">
         <mat-card-header>
           <mat-card-title>Description</mat-card-title>
         </mat-card-header>
 
-        <mat-form-field floatLabel="always">
-          <mat-label>Billed to</mat-label>
-          <input matInput formControlName="billedTo" type="text" required />
-        </mat-form-field>
+        <mat-card-content>
+          <mat-form-field floatLabel="always">
+            <mat-label>Billed to</mat-label>
+            <input matInput formControlName="billedTo" type="text" required />
+          </mat-form-field>
+
+          <mat-form-field class="date-form-fields">
+            <mat-label>Issue Date</mat-label>
+            <input
+              matInput
+              formControlName="issueDate"
+              [matDatepickerFilter]="dateFilter"
+              [matDatepicker]="issueDatePicker"
+              required
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="issueDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #issueDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="date-form-fields">
+            <mat-label>Due Date</mat-label>
+            <input
+              matInput
+              formControlName="dueDate"
+              [matDatepickerFilter]="dateFilter"
+              [matDatepicker]="dueDatePicker"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dueDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dueDatePicker></mat-datepicker>
+          </mat-form-field>
+        </mat-card-content>
       </mat-card>
 
       <ng-container formArrayName="lineItems">
@@ -55,15 +95,21 @@
               </mat-card-header>
 
               <mat-card-content>
-                <mat-form-field style="width: 72px" floatLabel="always">
+                <mat-form-field style="width: 96px" floatLabel="always">
                   <mat-label>Unit Cost</mat-label>
                   <input
                     matInput
                     formControlName="unitCost"
+                    style="text-align: center"
                     placeholder="{{ 0 | currency: 'CAD' }}"
                     type="number"
                     required
                   />
+                  <span
+                    matPrefix
+                    *ngIf="lineItems.get([i])?.get('unitCost')?.value"
+                    >CA$&nbsp;</span
+                  >
                 </mat-form-field>
 
                 <mat-form-field style="width: 48px" floatLabel="always">
@@ -72,6 +118,7 @@
                     matInput
                     type="number"
                     formControlName="quantity"
+                    style="text-align: center"
                     required
                   />
                 </mat-form-field>
@@ -89,26 +136,55 @@
         </ng-container>
       </ng-container>
 
-      <mat-card class="mat-elevation-z0">
+      <mat-card class="mat-elevation-z0 edit-summary">
         <mat-card-header>
           <mat-card-title>Summary</mat-card-title>
         </mat-card-header>
 
-        <mat-card-content style="text-align: right">
-          <p>Subtotal: {{ subtotal | currency: "CAD" }}</p>
-          <mat-form-field style="width: 120px" floatLabel="always">
-            <mat-label>Tax rate</mat-label>
-            <input
-              matInput
-              formControlName="taxRate"
-              style="text-align: right"
-              placeholder="{{ 0 | currency: 'CAD' }}"
-              type="number"
-              #taxRate
-            />
-            <span matPrefix *ngIf="taxRate.value">CA$&nbsp;</span>
-          </mat-form-field>
-          <p>Total: {{ Total | currency: "CAD" }}</p>
+        <mat-card-content>
+          <mat-list>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              ><span class="mat-body">Subtotal:</span>&nbsp;&nbsp;{{
+                subtotal | currency: "CAD"
+              }}</mat-list-item
+            >
+            <mat-divider></mat-divider>
+
+            <mat-list-item>
+              <span class="mat-body">Tax Rate:</span>&nbsp;&nbsp;
+
+              <mat-form-field style="width: 48px" floatLabel="always">
+                <mat-label></mat-label>
+
+                <input
+                  matInput
+                  formControlName="taxRate"
+                  type="number"
+                  style="text-align: center"
+                  placeholder="{{ 0 }}"
+                />
+
+                <span matSuffix *ngIf="true">&#37;</span>
+              </mat-form-field>
+
+              <span style="flex: 1"></span>
+
+              <span
+                ><span class="mat-body">Tax:</span>&nbsp;&nbsp;{{
+                  taxRate | currency: "CAD"
+                }}</span
+              >
+            </mat-list-item>
+
+            <mat-divider></mat-divider>
+            <mat-list-item
+              ><span class="mat-body">Total:</span>&nbsp;&nbsp;{{
+                Total | currency: "CAD"
+              }}</mat-list-item
+            >
+            <mat-divider></mat-divider>
+          </mat-list>
         </mat-card-content>
 
         <mat-card-actions style="margin-top: 18px" align="end">
@@ -140,7 +216,7 @@
         matStepperPrevious
       >
         <mat-icon>arrow_left</mat-icon>
-        <span>Create</span>
+        <span>Edit</span>
       </button>
       <button mat-raised-button color="primary" matStepperNext>
         <span>Send</span>

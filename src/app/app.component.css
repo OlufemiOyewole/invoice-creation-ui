@@ -10,7 +10,7 @@
   margin-bottom: 6px;
 }
 
-.line-items .mat-form-field {
+.mat-form-field {
   margin-right: 18px;
 }
 
@@ -20,4 +20,8 @@
 
 .mat-stepper-previous .mat-icon {
   margin-left: -16px;
+}
+
+.date-form-fields {
+  width: 108px;
 }

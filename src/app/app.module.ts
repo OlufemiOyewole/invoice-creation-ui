@@ -12,6 +12,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -21,13 +26,17 @@ import { MatIconModule } from '@angular/material/icon';
     MatToolbarModule,
     MatCardModule,
     MatIconModule,
+    MatDividerModule,
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [MatDatepickerModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
