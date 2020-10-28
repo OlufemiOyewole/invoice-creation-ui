@@ -20,3 +20,7 @@ mat-horizontal-stepper.big-screen .mat-horizontal-stepper-header-container {
 mat-horizontal-stepper .mat-horizontal-stepper-header-container {
   margin-bottom: 24px;
 }
+
+mat-card.line-items .mat-card-header-text {
+  margin: 0px;
+}

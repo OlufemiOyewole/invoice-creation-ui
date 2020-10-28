@@ -4,29 +4,120 @@
 
 <mat-horizontal-stepper [ngClass]="{ 'big-screen': isBigScreen }">
   <mat-step *ngIf="!isBigScreen" [stepControl]="invoiceFormGroup">
-    <form [formGroup]="invoiceFormGroup">
+    <form [formGroup]="invoiceFormGroup" autocomplete="off">
       <ng-template matStepLabel>Create</ng-template>
 
-      <span>Create Content</span>
+      <mat-card class="mat-elevation-z0">
+        <mat-card-header>
+          <mat-card-title>Description</mat-card-title>
+        </mat-card-header>
 
-      <br />
+        <mat-form-field floatLabel="always">
+          <mat-label>Billed to</mat-label>
+          <input matInput formControlName="billedTo" type="text" required />
+        </mat-form-field>
+      </mat-card>
 
-      <mat-form-field>
-        <mat-label>Description</mat-label>
-        <input
-          matInput
-          formControlName="description"
-          placeholder="Description"
-          required
-        />
-      </mat-form-field>
+      <ng-container formArrayName="lineItems">
+        <ng-container *ngFor="let _ of lineItems.controls; index as i">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            "
+          >
+            <button
+              mat-icon-button
+              style="cursor: move; margin-left: -8px"
+              disableRipple
+            >
+              <mat-icon>drag_handle</mat-icon>
+            </button>
 
-      <br />
-      <br />
+            <mat-card
+              [formGroupName]="i"
+              class="line-items mat-elevation-z0"
+              style="flex: 1; padding-top: 6px; padding-bottom: 0px"
+            >
+              <mat-card-header style="align-items: center">
+                <mat-card-subtitle style="margin-bottom: 0px">
+                  <mat-form-field floatLabel="never">
+                    <input
+                      matInput
+                      formControlName="description"
+                      type="text"
+                      placeholder="Description"
+                      required
+                    />
+                  </mat-form-field>
+                </mat-card-subtitle>
+              </mat-card-header>
 
-      <div>
-        <button mat-raised-button matStepperNext>Preview</button>
-      </div>
+              <mat-card-content>
+                <mat-form-field style="width: 72px" floatLabel="always">
+                  <mat-label>Unit Cost</mat-label>
+                  <input
+                    matInput
+                    formControlName="unitCost"
+                    placeholder="{{ 0 | currency: 'CAD' }}"
+                    type="number"
+                    required
+                  />
+                </mat-form-field>
+
+                <mat-form-field style="width: 48px" floatLabel="always">
+                  <mat-label>Quantity</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="quantity"
+                    required
+                  />
+                </mat-form-field>
+
+                <span style="float: right; margin-bottom: 12px">
+                  {{
+                    lineItems.get([i])?.get("unitCost")?.value *
+                      lineItems.get([i])?.get("quantity")?.value
+                      | currency: "CAD"
+                  }}</span
+                >
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <mat-card class="mat-elevation-z0">
+        <mat-card-header>
+          <mat-card-title>Summary</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content style="text-align: right">
+          <p>Subtotal: {{ subtotal | currency: "CAD" }}</p>
+          <mat-form-field style="width: 120px" floatLabel="always">
+            <mat-label>Tax rate</mat-label>
+            <input
+              matInput
+              formControlName="taxRate"
+              style="text-align: right"
+              placeholder="{{ 0 | currency: 'CAD' }}"
+              type="number"
+              #taxRate
+            />
+            <span matPrefix *ngIf="taxRate.value">CA$&nbsp;</span>
+          </mat-form-field>
+          <p>Total: {{ Total | currency: "CAD" }}</p>
+        </mat-card-content>
+
+        <mat-card-actions style="margin-top: 18px" align="end">
+          <button mat-raised-button color="primary" matStepperNext>
+            <span>Preview</span>
+            <mat-icon>arrow_right</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
     </form>
   </mat-step>
 
@@ -45,11 +136,16 @@
         mat-raised-button
         *ngIf="!isBigScreen"
         style="margin-right: 24px"
+        color="primary"
         matStepperPrevious
       >
-        Create
+        <mat-icon>arrow_left</mat-icon>
+        <span>Create</span>
       </button>
-      <button mat-raised-button matStepperNext>Send</button>
+      <button mat-raised-button color="primary" matStepperNext>
+        <span>Send</span>
+        <mat-icon>arrow_right</mat-icon>
+      </button>
     </div>
   </mat-step>
 
@@ -62,7 +158,11 @@
     <br />
 
     <div>
-      <button mat-raised-button matStepperPrevious>Preview</button>
+      <button mat-raised-button color="primary" matStepperPrevious>
+        <mat-icon>arrow_left</mat-icon>
+
+        <span>Preview</span>
+      </button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

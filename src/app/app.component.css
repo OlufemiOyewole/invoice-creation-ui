@@ -4,3 +4,20 @@
   width: fit-content;
   background-color: unset;
 }
+
+.mat-card {
+  border: 1px solid lightgrey;
+  margin-bottom: 6px;
+}
+
+.line-items .mat-form-field {
+  margin-right: 18px;
+}
+
+.mat-stepper-next .mat-icon {
+  margin-right: -16px;
+}
+
+.mat-stepper-previous .mat-icon {
+  margin-left: -16px;
+}
