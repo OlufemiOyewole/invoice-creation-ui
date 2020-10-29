@@ -2,14 +2,6 @@
   margin-right: 18px;
 }
 
-.mat-stepper-next .mat-icon {
-  margin-right: -16px;
-}
-
-.mat-stepper-previous .mat-icon {
-  margin-left: -16px;
-}
-
 .date-form-fields {
   width: 108px;
 }

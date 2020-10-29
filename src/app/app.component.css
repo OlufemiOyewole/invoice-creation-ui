@@ -5,6 +5,14 @@
   background-color: unset;
 }
 
+.mat-stepper-next .mat-icon {
+  margin-right: -16px;
+}
+
+.mat-stepper-previous .mat-icon {
+  margin-left: -16px;
+}
+
 .stepper-action-buttons {
   display: flex;
   margin-top: 18px;
