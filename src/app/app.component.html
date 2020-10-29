@@ -1,5 +1,5 @@
 <mat-toolbar [class]="isBigScreen ? 'big-screen-toolbar' : ''"
-  >Invoice #1</mat-toolbar
+  >Invoice #{{ +invoiceForm.get("invoiceNumber")?.value }}</mat-toolbar
 >
 
 <mat-horizontal-stepper [ngClass]="{ 'big-screen': isBigScreen }">
@@ -12,7 +12,7 @@
     <ng-template matStepLabel>{{
       createOrEditStep.interacted ? "Edit" : "Create"
     }}</ng-template>
-    <app-edit-invoice-mobile></app-edit-invoice-mobile>
+    <app-edit-invoice></app-edit-invoice>
 
     <div style="margin-top: 18px; text-align: right">
       <button mat-raised-button type="button" color="accent" matStepperNext>
@@ -27,7 +27,7 @@
       isBigScreen ? "Edit & Preview" : "Preview"
     }}</ng-template>
 
-    <span>Edit & Preview Content</span>
+    <app-edit-preview-invoice></app-edit-preview-invoice>
 
     <br />
     <br />

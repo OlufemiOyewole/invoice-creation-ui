@@ -4,11 +4,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialComponentsModule } from '../core/material-components.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { EditInvoiceMobileComponent } from './edit-invoice-mobile.component';
+import { EditInvoiceComponent } from './edit-invoice.component';
 
 describe('EditInvoiceMobileComponent', () => {
-  let component: EditInvoiceMobileComponent;
-  let fixture: ComponentFixture<EditInvoiceMobileComponent>;
+  let component: EditInvoiceComponent;
+  let fixture: ComponentFixture<EditInvoiceComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,12 +18,12 @@ describe('EditInvoiceMobileComponent', () => {
         DragDropModule,
         BrowserAnimationsModule,
       ],
-      declarations: [EditInvoiceMobileComponent],
+      declarations: [EditInvoiceComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditInvoiceMobileComponent);
+    fixture = TestBed.createComponent(EditInvoiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

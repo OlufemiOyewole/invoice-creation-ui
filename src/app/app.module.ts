@@ -7,10 +7,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialComponentsModule } from './core/material-components.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { EditInvoiceMobileComponent } from './edit-invoice-mobile/edit-invoice-mobile.component';
+import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
+import { EditPreviewInvoiceComponent } from './edit-preview-invoice/edit-preview-invoice.component';
 
 @NgModule({
-  declarations: [AppComponent, EditInvoiceMobileComponent],
+  declarations: [
+    AppComponent,
+    EditInvoiceComponent,
+    EditPreviewInvoiceComponent,
+  ],
   imports: [
     MaterialComponentsModule,
     DragDropModule,

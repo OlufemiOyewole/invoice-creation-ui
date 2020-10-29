@@ -1,10 +1,18 @@
 <form [formGroup]="invoiceForm" autocomplete="off">
   <mat-card class="mat-elevation-z0">
-    <mat-card-header>
+    <mat-card-header style="margin-bottom: 8px">
       <mat-card-title>Description</mat-card-title>
     </mat-card-header>
+    <mat-divider></mat-divider>
 
-    <div style="display: flex; justify-content: space-between; flex-wrap: wrap">
+    <mat-card-content
+      style="
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        padding-top: 12px;
+      "
+    >
       <mat-form-field floatLabel="always">
         <mat-label>Billed to</mat-label>
         <input matInput formControlName="billedTo" type="text" required />
@@ -42,7 +50,7 @@
           <mat-datepicker #dueDatePicker></mat-datepicker>
         </mat-form-field>
       </div>
-    </div>
+    </mat-card-content>
   </mat-card>
 
   <div
@@ -79,7 +87,7 @@
         <mat-card
           [formGroupName]="i"
           class="line-items mat-elevation-z0"
-          style="flex: 1; padding-top: 0px; padding-bottom: 0px"
+          style="flex: 1; padding-top: 0px"
         >
           <div class="item-field-row">
             <mat-form-field style="width: 108px" floatLabel="never">
@@ -87,7 +95,7 @@
                 matInput
                 formControlName="description"
                 type="text"
-                placeholder="Description"
+                placeholder="Item description"
                 required
               />
             </mat-form-field>
@@ -164,7 +172,7 @@
       (click)="addLineItem()"
       color="accent"
     >
-      <span>Add Item</span>
+      <span>Add Item &nbsp;</span>
       <mat-icon fontSet="material-icons-outlined">add_box</mat-icon>
     </button>
   </mat-card>
@@ -187,7 +195,10 @@
         <mat-list-item>
           <span class="mat-body">Tax Rate:</span>&nbsp;&nbsp;
 
-          <mat-form-field style="width: 48px" floatLabel="always">
+          <mat-form-field
+            style="width: 48px; font-size: 14px"
+            floatLabel="always"
+          >
             <mat-label></mat-label>
 
             <input

@@ -9,12 +9,12 @@ import {
 } from '@angular/animations';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
-import { InvoiceFormService } from '../invoice-form.service';
+import { InvoiceFormService } from '../core/invoice-form.service';
 
 @Component({
-  selector: 'app-edit-invoice-mobile',
-  templateUrl: './edit-invoice-mobile.component.html',
-  styleUrls: ['./edit-invoice-mobile.component.css'],
+  selector: 'app-edit-invoice',
+  templateUrl: './edit-invoice.component.html',
+  styleUrls: ['./edit-invoice.component.css'],
   animations: [
     trigger('addOrRemoveLineItem', [
       transition(':enter', [
@@ -43,7 +43,7 @@ import { InvoiceFormService } from '../invoice-form.service';
     ]),
   ],
 })
-export class EditInvoiceMobileComponent {
+export class EditInvoiceComponent {
   dateFilter = (d: Date | null): boolean => {
     const day = d || new Date();
     const today = new Date();

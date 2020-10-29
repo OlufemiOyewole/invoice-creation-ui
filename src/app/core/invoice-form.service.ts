@@ -13,6 +13,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class InvoiceFormService {
   invoiceForm: FormGroup = this.fb.group({
+    invoiceNumber: ['000001'],
     billedTo: ['', Validators.required],
     issueDate: ['', Validators.required],
     dueDate: [''],
