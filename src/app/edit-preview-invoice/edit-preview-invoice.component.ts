@@ -1,4 +1,12 @@
-import { Component, HostListener, Input, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
+import { MatCard } from '@angular/material/card';
 
 @Component({
   selector: 'app-edit-preview-invoice',
@@ -7,8 +15,10 @@ import { Component, HostListener, Input, AfterViewInit } from '@angular/core';
 })
 export class EditPreviewInvoiceComponent implements AfterViewInit {
   @Input() parentContainer?: HTMLDivElement;
+  @ViewChild('previewContainer') previewContainerElement!: ElementRef;
 
   invoiceWidth = 820;
+  previewHeight = '0px';
   previewScale = 'translate(-50%, 0%) scale(1)';
   scaleInterval: ReturnType<typeof setTimeout> = setTimeout(() => '');
 
@@ -20,12 +30,19 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
   constructor() {}
 
   setScale(windowWidth: number | undefined) {
-    const scale = windowWidth ? windowWidth / this.invoiceWidth : 1;
+    let scale = windowWidth ? windowWidth / this.invoiceWidth : 1;
 
     clearInterval(this.scaleInterval);
 
     this.scaleInterval = setTimeout(() => {
-      this.previewScale = `translate(-50%, 0%) scale(${scale < 1 ? scale : 1})`;
+      scale = scale < 1 ? scale : 1;
+      this.previewScale = `translate(-50%, 0%) scale(${scale})`;
+
+      setTimeout(() => {
+        this.previewHeight =
+          this.previewContainerElement.nativeElement.offsetHeight * scale +
+          'px';
+      });
     }, 10);
   }
 

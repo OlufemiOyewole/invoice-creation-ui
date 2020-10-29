@@ -1,0 +1,24 @@
+.mat-card {
+  padding-top: 141.42%;
+  position: relative;
+  border-radius: 0%;
+}
+
+.preview-container {
+  box-sizing: border-box;
+  transform-origin: top;
+  margin: auto;
+  top: 0px;
+  left: 50%;
+  z-index: 1;
+  position: absolute;
+  border-radius: 0px;
+}
+
+.preview-content {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  bottom: 16px;
+  right: 16px;
+}

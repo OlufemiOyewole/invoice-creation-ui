@@ -16,6 +16,7 @@
 .stepper-action-buttons {
   display: flex;
   margin-top: 18px;
+  justify-content: center;
 }
 
 .stepper-action-buttons .spacer {
