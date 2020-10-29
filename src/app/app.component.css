@@ -1,0 +1,6 @@
+.big-screen-toolbar {
+  height: 72px;
+  float: left;
+  width: fit-content;
+  background-color: unset;
+}

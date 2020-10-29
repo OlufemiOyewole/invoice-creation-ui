@@ -1,10 +1,3 @@
-.big-screen-toolbar {
-  height: 72px;
-  float: left;
-  width: fit-content;
-  background-color: unset;
-}
-
 .mat-card {
   border: 1px solid lightgrey;
   margin-bottom: 6px;
