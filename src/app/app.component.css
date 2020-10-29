@@ -4,3 +4,12 @@
   width: fit-content;
   background-color: unset;
 }
+
+.stepper-action-buttons {
+  display: flex;
+  margin-top: 18px;
+}
+
+.stepper-action-buttons .spacer {
+  flex: 1;
+}

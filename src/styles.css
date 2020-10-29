@@ -9,6 +9,12 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.mat-card {
+  border: 1px solid lightgrey;
+  margin-bottom: 6px;
+  padding-bottom: 0px;
+}
+
 mat-horizontal-stepper.big-screen .mat-stepper-horizontal-line {
   flex: 0;
 }

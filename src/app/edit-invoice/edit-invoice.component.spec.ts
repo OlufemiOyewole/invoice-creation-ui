@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialComponentsModule } from '../core/material-components.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { EditInvoiceComponent } from './edit-invoice.component';
+import { AppComponent } from '../app.component';
 
 describe('EditInvoiceMobileComponent', () => {
   let component: EditInvoiceComponent;
@@ -18,7 +19,7 @@ describe('EditInvoiceMobileComponent', () => {
         DragDropModule,
         BrowserAnimationsModule,
       ],
-      declarations: [EditInvoiceComponent],
+      declarations: [EditInvoiceComponent, AppComponent],
     }).compileComponents();
   }));
 

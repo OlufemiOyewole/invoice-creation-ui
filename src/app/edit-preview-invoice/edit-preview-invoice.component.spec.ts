@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
+import { MaterialComponentsModule } from '../core/material-components.module';
 import { EditPreviewInvoiceComponent } from './edit-preview-invoice.component';
 
 describe('EditPreviewInvoiceComponent', () => {
@@ -8,9 +10,9 @@ describe('EditPreviewInvoiceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditPreviewInvoiceComponent ]
-    })
-    .compileComponents();
+      imports: [ReactiveFormsModule, MaterialComponentsModule],
+      declarations: [EditPreviewInvoiceComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

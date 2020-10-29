@@ -1,22 +1,28 @@
 <form [formGroup]="invoiceForm" autocomplete="off">
   <mat-card class="mat-elevation-z0">
     <mat-card-header style="margin-bottom: 8px">
-      <mat-card-title>Description</mat-card-title>
+      <mat-card-title>Details</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
 
-    <mat-card-content
-      style="
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        padding-top: 12px;
-      "
-    >
-      <mat-form-field floatLabel="always">
-        <mat-label>Billed to</mat-label>
-        <input matInput formControlName="billedTo" type="text" required />
-      </mat-form-field>
+    <mat-card-content style="display: flex; flex-wrap: wrap; padding-top: 12px">
+      <div>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input
+            matInput
+            formControlName="description"
+            type="text"
+            placeholder="Description of invoice"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Billed to</mat-label>
+          <input matInput formControlName="billedTo" type="text" required />
+        </mat-form-field>
+      </div>
 
       <div>
         <mat-form-field class="date-form-fields">
