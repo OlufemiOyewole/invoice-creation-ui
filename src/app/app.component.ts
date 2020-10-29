@@ -3,6 +3,13 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { STEPPER_GLOBAL_OPTIONS, StepState } from '@angular/cdk/stepper';
 import { Subscription } from 'rxjs';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  keyframes,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +20,33 @@ import { Subscription } from 'rxjs';
       provide: STEPPER_GLOBAL_OPTIONS,
       useValue: { showError: true },
     },
+  ],
+  animations: [
+    trigger('addOrRemoveLineItem', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          marginTop: '-172px',
+        }),
+        animate(
+          '0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
+          keyframes([
+            style({ opacity: 0, marginTop: '-17px', offset: 0.9 }),
+            style({ opacity: 1, marginTop: '0px', offset: 1 }),
+          ])
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
+          keyframes([
+            style({ opacity: 1, marginTop: '0px', offset: 0 }),
+            style({ opacity: 0, marginTop: '-34px', offset: 0.2 }),
+            style({ opacity: 0, marginTop: '-172px', offset: 1 }),
+          ])
+        ),
+      ]),
+    ]),
   ],
 })
 export class AppComponent implements OnDestroy {
@@ -28,18 +62,7 @@ export class AppComponent implements OnDestroy {
     billedTo: ['', Validators.required],
     issueDate: ['', Validators.required],
     dueDate: [''],
-    lineItems: this.fb.array([
-      this.fb.group({
-        description: [undefined, Validators.required],
-        unitCost: [undefined, Validators.required],
-        quantity: [1, [Validators.required, Validators.min(1)]],
-      }),
-      this.fb.group({
-        description: [undefined, Validators.required],
-        unitCost: [undefined, Validators.required],
-        quantity: [1, [Validators.required, Validators.min(1)]],
-      }),
-    ]),
+    lineItems: this.fb.array([]),
     taxRate: ['', [Validators.max(99), Validators.min(0)]],
   });
   isBigScreen = false;
@@ -79,6 +102,20 @@ export class AppComponent implements OnDestroy {
   get Total() {
     const total = this.subtotal + this.taxRate;
     return total;
+  }
+
+  addLineItem() {
+    this.lineItems.push(
+      this.fb.group({
+        description: [undefined, Validators.required],
+        unitCost: [undefined, Validators.required],
+        quantity: [1, [Validators.required, Validators.min(1)]],
+      })
+    );
+  }
+
+  deleteLineItem(index: number) {
+    this.lineItems.removeAt(index);
   }
 
   ngOnDestroy() {

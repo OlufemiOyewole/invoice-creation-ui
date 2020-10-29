@@ -19,43 +19,47 @@
           <mat-card-title>Description</mat-card-title>
         </mat-card-header>
 
-        <mat-card-content>
+        <div
+          style="display: flex; justify-content: space-between; flex-wrap: wrap"
+        >
           <mat-form-field floatLabel="always">
             <mat-label>Billed to</mat-label>
             <input matInput formControlName="billedTo" type="text" required />
           </mat-form-field>
 
-          <mat-form-field class="date-form-fields">
-            <mat-label>Issue Date</mat-label>
-            <input
-              matInput
-              formControlName="issueDate"
-              [matDatepickerFilter]="dateFilter"
-              [matDatepicker]="issueDatePicker"
-              required
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="issueDatePicker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #issueDatePicker></mat-datepicker>
-          </mat-form-field>
+          <div>
+            <mat-form-field class="date-form-fields">
+              <mat-label>Issue Date</mat-label>
+              <input
+                matInput
+                formControlName="issueDate"
+                [matDatepickerFilter]="dateFilter"
+                [matDatepicker]="issueDatePicker"
+                required
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="issueDatePicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #issueDatePicker></mat-datepicker>
+            </mat-form-field>
 
-          <mat-form-field class="date-form-fields">
-            <mat-label>Due Date</mat-label>
-            <input
-              matInput
-              formControlName="dueDate"
-              [matDatepickerFilter]="dateFilter"
-              [matDatepicker]="dueDatePicker"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="dueDatePicker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #dueDatePicker></mat-datepicker>
-          </mat-form-field>
-        </mat-card-content>
+            <mat-form-field class="date-form-fields">
+              <mat-label>Due Date</mat-label>
+              <input
+                matInput
+                formControlName="dueDate"
+                [matDatepickerFilter]="dateFilter"
+                [matDatepicker]="dueDatePicker"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dueDatePicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dueDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
       </mat-card>
 
       <ng-container formArrayName="lineItems">
@@ -66,10 +70,12 @@
               align-items: center;
               justify-content: space-between;
             "
+            @addOrRemoveLineItem
           >
             <button
               mat-icon-button
               style="cursor: move; margin-left: -8px"
+              type="button"
               disableRipple
             >
               <mat-icon>drag_handle</mat-icon>
@@ -78,23 +84,23 @@
             <mat-card
               [formGroupName]="i"
               class="line-items mat-elevation-z0"
-              style="flex: 1; padding-top: 6px; padding-bottom: 0px"
+              style="flex: 1; padding-top: 0px; padding-bottom: 0px"
             >
-              <mat-card-header style="align-items: center">
-                <mat-card-subtitle style="margin-bottom: 0px">
-                  <mat-form-field floatLabel="never">
-                    <input
-                      matInput
-                      formControlName="description"
-                      type="text"
-                      placeholder="Description"
-                      required
-                    />
-                  </mat-form-field>
-                </mat-card-subtitle>
-              </mat-card-header>
+              <div class="item-field-row">
+                <mat-form-field style="width: 108px" floatLabel="never">
+                  <input
+                    matInput
+                    formControlName="description"
+                    type="text"
+                    placeholder="Description"
+                    required
+                  />
+                </mat-form-field>
 
-              <mat-card-content>
+                <div style="width: 48px"></div>
+              </div>
+
+              <div class="item-field-row">
                 <mat-form-field style="width: 96px" floatLabel="always">
                   <mat-label>Unit Cost</mat-label>
                   <input
@@ -112,7 +118,12 @@
                   >
                 </mat-form-field>
 
-                <mat-form-field style="width: 48px" floatLabel="always">
+                <div style="flex: 1"></div>
+                <div style="width: 48px"></div>
+              </div>
+
+              <div class="item-field-row" style="flex-wrap: wrap">
+                <mat-form-field style="width: 72px" floatLabel="always">
                   <mat-label>Quantity</mat-label>
                   <input
                     matInput
@@ -123,18 +134,50 @@
                   />
                 </mat-form-field>
 
-                <span style="float: right; margin-bottom: 12px">
-                  {{
-                    lineItems.get([i])?.get("unitCost")?.value *
-                      lineItems.get([i])?.get("quantity")?.value
-                      | currency: "CAD"
-                  }}</span
-                >
-              </mat-card-content>
+                <div style="flex: 3"></div>
+
+                <div style="margin-bottom: 12px; display: flex; flex: 1">
+                  <div style="flex: 1"></div>
+
+                  <div>
+                    {{
+                      lineItems.get([i])?.get("unitCost")?.value *
+                        lineItems.get([i])?.get("quantity")?.value
+                        | currency: "CAD"
+                    }}
+                  </div>
+                </div>
+              </div>
             </mat-card>
+
+            <button
+              mat-icon-button
+              style="cursor: pointer; margin-right: -8px"
+              type="button"
+              (click)="deleteLineItem(i)"
+            >
+              <mat-icon fontSet="material-icons-outlined"
+                >delete_forever</mat-icon
+              >
+            </button>
           </div>
         </ng-container>
       </ng-container>
+
+      <mat-card
+        class="mat-elevation-z0"
+        style="border-style: unset; text-align: center; padding-top: 0px"
+      >
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="addLineItem()"
+          color="accent"
+        >
+          <span>Add Item</span>
+          <mat-icon fontSet="material-icons-outlined">add_box</mat-icon>
+        </button>
+      </mat-card>
 
       <mat-card class="mat-elevation-z0 edit-summary">
         <mat-card-header>
@@ -188,7 +231,7 @@
         </mat-card-content>
 
         <mat-card-actions style="margin-top: 18px" align="end">
-          <button mat-raised-button color="primary" matStepperNext>
+          <button mat-raised-button type="button" color="accent" matStepperNext>
             <span>Preview</span>
             <mat-icon>arrow_right</mat-icon>
           </button>
@@ -212,13 +255,14 @@
         mat-raised-button
         *ngIf="!isBigScreen"
         style="margin-right: 24px"
-        color="primary"
+        color="accent"
+        type="button"
         matStepperPrevious
       >
         <mat-icon>arrow_left</mat-icon>
         <span>Edit</span>
       </button>
-      <button mat-raised-button color="primary" matStepperNext>
+      <button mat-raised-button type="button" color="accent" matStepperNext>
         <span>Send</span>
         <mat-icon>arrow_right</mat-icon>
       </button>
@@ -234,7 +278,7 @@
     <br />
 
     <div>
-      <button mat-raised-button color="primary" matStepperPrevious>
+      <button mat-raised-button type="button" color="accent" matStepperPrevious>
         <mat-icon>arrow_left</mat-icon>
 
         <span>Preview</span>
