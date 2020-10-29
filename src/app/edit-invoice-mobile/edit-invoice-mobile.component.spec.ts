@@ -1,5 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
+import { MaterialComponentsModule } from '../core/material-components.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { EditInvoiceMobileComponent } from './edit-invoice-mobile.component';
 
 describe('EditInvoiceMobileComponent', () => {
@@ -8,9 +12,14 @@ describe('EditInvoiceMobileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditInvoiceMobileComponent ]
-    })
-    .compileComponents();
+      imports: [
+        ReactiveFormsModule,
+        MaterialComponentsModule,
+        DragDropModule,
+        BrowserAnimationsModule,
+      ],
+      declarations: [EditInvoiceMobileComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
