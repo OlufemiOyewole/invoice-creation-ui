@@ -17,9 +17,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { EditInvoiceMobileComponent } from './edit-invoice-mobile/edit-invoice-mobile.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, EditInvoiceMobileComponent],
   imports: [
     MatInputModule,
     MatStepperModule,
