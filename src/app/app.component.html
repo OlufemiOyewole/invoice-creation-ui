@@ -2,7 +2,11 @@
   >Invoice #{{ +invoiceForm.get("invoiceNumber")?.value }}</mat-toolbar
 >
 
-<mat-horizontal-stepper [ngClass]="{ 'big-screen': isBigScreen }">
+<mat-horizontal-stepper
+  [ngClass]="{ 'big-screen': isBigScreen }"
+  [selectedIndex]="currentStepperIndex"
+  (selectionChange)="currentStepperIndex = $event.selectedIndex"
+>
   <mat-step
     *ngIf="!isBigScreen"
     [stepControl]="invoiceForm"
