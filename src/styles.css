@@ -29,3 +29,7 @@ mat-card.line-items .mat-card-header-text {
   justify-content: flex-end;
   padding: 0px;
 }
+
+.edit-summary .mat-list .mat-list-item:last-child .mat-list-item-content {
+  align-items: flex-end;
+}

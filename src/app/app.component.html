@@ -62,21 +62,33 @@
         </div>
       </mat-card>
 
-      <ng-container formArrayName="lineItems">
-        <ng-container *ngFor="let _ of lineItems.controls; index as i">
+      <div
+        formArrayName="lineItems"
+        cdkDropList
+        class="line-item-list"
+        [cdkDropListData]="lineItems.controls"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          *ngFor="let _ of lineItems.controls; index as i"
+          class="line-item"
+          cdkDrag
+          cdkDragLockAxis="y"
+          @addOrRemoveLineItem
+        >
           <div
             style="
               display: flex;
               align-items: center;
               justify-content: space-between;
             "
-            @addOrRemoveLineItem
           >
             <button
               mat-icon-button
               style="cursor: move; margin-left: -8px"
               type="button"
               disableRipple
+              cdkDragHandle
             >
               <mat-icon>drag_handle</mat-icon>
             </button>
@@ -161,8 +173,8 @@
               >
             </button>
           </div>
-        </ng-container>
-      </ng-container>
+        </div>
+      </div>
 
       <mat-card
         class="mat-elevation-z0"
@@ -221,22 +233,22 @@
             </mat-list-item>
 
             <mat-divider></mat-divider>
-            <mat-list-item
-              ><span class="mat-body">Total:</span>&nbsp;&nbsp;{{
-                Total | currency: "CAD"
-              }}</mat-list-item
-            >
-            <mat-divider></mat-divider>
+            <mat-list-item>
+              <span class="mat-body">Total:</span>&nbsp;&nbsp;
+              <b>
+                {{ Total | currency: "CAD" }}
+              </b>
+            </mat-list-item>
           </mat-list>
         </mat-card-content>
-
-        <mat-card-actions style="margin-top: 18px" align="end">
-          <button mat-raised-button type="button" color="accent" matStepperNext>
-            <span>Preview</span>
-            <mat-icon>arrow_right</mat-icon>
-          </button>
-        </mat-card-actions>
       </mat-card>
+
+      <div style="margin-top: 18px; text-align: right">
+        <button mat-raised-button type="button" color="accent" matStepperNext>
+          <span>Preview</span>
+          <mat-icon>arrow_right</mat-icon>
+        </button>
+      </div>
     </form>
   </mat-step>
 

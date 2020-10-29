@@ -1,5 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormArray,
+  AbstractControl,
+} from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { STEPPER_GLOBAL_OPTIONS, StepState } from '@angular/cdk/stepper';
 import { Subscription } from 'rxjs';
@@ -10,6 +16,7 @@ import {
   animate,
   keyframes,
 } from '@angular/animations';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-root',
@@ -116,6 +123,14 @@ export class AppComponent implements OnDestroy {
 
   deleteLineItem(index: number) {
     this.lineItems.removeAt(index);
+  }
+
+  drop(event: CdkDragDrop<AbstractControl[]>) {
+    moveItemInArray(
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 
   ngOnDestroy() {
