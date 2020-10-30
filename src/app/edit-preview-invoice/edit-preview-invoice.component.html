@@ -5,7 +5,69 @@
     #previewContainer
   >
     <mat-card class="mat-elevation-z4">
-      <div class="preview-content"></div>
+      <main class="preview-content">
+        <section class="header">
+          <div style="flex: 2">
+            <div style="padding-right: 72px">
+              <div class="mat-display-1" style="margin-bottom: 0px">
+                INVOICE
+              </div>
+              <div>
+                Description of invoice Lorem ipsum dolor sit amet, consectetur.
+              </div>
+            </div>
+          </div>
+
+          <div
+            style="
+              flex: 1;
+              text-align: center;
+              background-color: white;
+              justify-content: center;
+              padding: 0px 16px;
+            "
+          >
+            <div>
+              <div>Amount Due</div>
+              <div
+                class="mat-display-1"
+                style="margin-bottom: 0px; max-width: 350px"
+              >
+                {{ 0 | currency: "CAD" }}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="subheader mat-subheading-2">
+          <div style="flex: 4">
+            <div>Billed To:</div>
+            <div></div>
+          </div>
+          <div style="flex: 1; text-align: right">
+            <div>Invoice Number:</div>
+            <div>Issue Date:</div>
+            <div>Due Date:</div>
+          </div>
+          <div style="flex: 1; padding: 0px 16px">
+            <div>{{ +invoiceForm.get("invoiceNumber")?.value }}</div>
+            <div>
+              {{
+                +invoiceForm.get("issueDate")?.value
+                  ? (+invoiceForm.get("issueDate")?.value | date)
+                  : "&mdash;"
+              }}
+            </div>
+            <div>
+              {{
+                +invoiceForm.get("dueDate")?.value
+                  ? (+invoiceForm.get("dueDate")?.value | date)
+                  : "&mdash;"
+              }}
+            </div>
+          </div>
+        </section>
+      </main>
     </mat-card>
   </div>
 </div>

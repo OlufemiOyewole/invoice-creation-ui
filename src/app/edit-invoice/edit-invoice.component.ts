@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 import {
   trigger,
   transition,
@@ -55,10 +55,7 @@ export class EditInvoiceComponent {
 
   invoiceForm: FormGroup;
 
-  constructor(
-    private invoiceFormService: InvoiceFormService,
-    private fb: FormBuilder
-  ) {
+  constructor(private invoiceFormService: InvoiceFormService) {
     this.invoiceForm = this.invoiceFormService.invoiceForm;
   }
 

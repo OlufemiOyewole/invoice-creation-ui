@@ -16,7 +16,7 @@ export class InvoiceFormService {
     invoiceNumber: ['000001'],
     description: ['', Validators.required],
     billedTo: ['', Validators.required],
-    issueDate: ['', Validators.required],
+    issueDate: [new Date(), Validators.required],
     dueDate: [''],
     lineItems: this.fb.array([]),
     taxRate: ['', [Validators.max(99), Validators.min(0)]],

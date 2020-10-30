@@ -6,7 +6,8 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { MatCard } from '@angular/material/card';
+import { FormGroup } from '@angular/forms';
+import { InvoiceFormService } from '../core/invoice-form.service';
 
 @Component({
   selector: 'app-edit-preview-invoice',
@@ -16,7 +17,7 @@ import { MatCard } from '@angular/material/card';
 export class EditPreviewInvoiceComponent implements AfterViewInit {
   @Input() parentContainer?: HTMLDivElement;
   @ViewChild('previewContainer') previewContainerElement!: ElementRef;
-
+  invoiceForm: FormGroup;
   invoiceWidth = 820;
   previewHeight = '0px';
   previewScale = 'translate(-50%, 0%) scale(1)';
@@ -27,7 +28,9 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     this.setScale(this.parentContainer?.offsetWidth);
   }
 
-  constructor() {}
+  constructor(private invoiceFormService: InvoiceFormService) {
+    this.invoiceForm = this.invoiceFormService.invoiceForm;
+  }
 
   setScale(windowWidth: number | undefined) {
     let scale = windowWidth ? windowWidth / this.invoiceWidth : 1;

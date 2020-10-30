@@ -17,8 +17,32 @@
 
 .preview-content {
   position: absolute;
-  top: 16px;
-  left: 16px;
-  bottom: 16px;
-  right: 16px;
+  top: 36px;
+  left: 36px;
+  bottom: 36px;
+  right: 36px;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.header {
+  display: flex;
+  background-color: whitesmoke;
+  margin: -36px;
+  padding: 36px 52px;
+  margin-bottom: 24px;
+}
+
+.header > div {
+  height: 96px;
+  display: flex;
+  align-items: center;
+}
+
+.subheader {
+  font-variant: small-caps;
+  display: flex;
+}
+
+.subheader > div {
+  flex: 1;
 }
