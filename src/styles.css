@@ -21,6 +21,7 @@ mat-horizontal-stepper.big-screen .mat-stepper-horizontal-line {
 
 mat-horizontal-stepper.big-screen .mat-horizontal-stepper-header-container {
   justify-content: flex-end;
+  margin-right: 60px;
 }
 
 mat-horizontal-stepper .mat-horizontal-stepper-header-container {

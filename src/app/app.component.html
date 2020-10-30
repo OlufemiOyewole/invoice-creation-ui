@@ -1,79 +1,124 @@
-<mat-toolbar [class]="isBigScreen ? 'big-screen-toolbar' : ''"
-  >Invoice #{{ +invoiceForm.get("invoiceNumber")?.value }}</mat-toolbar
->
+<mat-sidenav-container>
+  <mat-sidenav-content>
+    <mat-toolbar [class]="isBigScreen ? 'big-screen-toolbar' : ''">
+      <span>Invoice #{{ +invoiceForm.get("invoiceNumber")?.value }}</span>
+      <span style="flex: 1"></span>
 
-<mat-horizontal-stepper
-  [ngClass]="{ 'big-screen': isBigScreen }"
-  [selectedIndex]="currentStepperIndex"
-  (selectionChange)="currentStepperIndex = $event.selectedIndex"
->
-  <mat-step
-    *ngIf="!isBigScreen"
-    [stepControl]="invoiceForm"
-    errorMessage=""
-    #createOrEditStep
-  >
-    <ng-template matStepLabel>{{
-      createOrEditStep.interacted ? "Edit" : "Create"
-    }}</ng-template>
-    <app-edit-invoice></app-edit-invoice>
-
-    <div class="stepper-action-buttons">
-      <button mat-button type="button" color="accent" matStepperNext>
-        <span>Preview</span>
-        <mat-icon>arrow_right</mat-icon>
+      <button mat-icon-button *ngIf="!isBigScreen" (click)="sideNav.toggle()">
+        <mat-icon>new_releases</mat-icon>
       </button>
-    </div>
-  </mat-step>
+    </mat-toolbar>
 
-  <mat-step>
-    <ng-template matStepLabel>{{
-      isBigScreen ? "Edit & Preview" : "Preview"
-    }}</ng-template>
-
-    <div #previewContainer>
-      <app-edit-preview-invoice
-        [parentContainer]="previewContainer"
-        [editMode]="isBigScreen"
-      ></app-edit-preview-invoice>
-    </div>
-
-    <div class="stepper-action-buttons">
-      <button
-        mat-button
-        *ngIf="!isBigScreen"
-        style="margin-right: 24px"
-        color="accent"
-        type="button"
-        matStepperPrevious
+    <div *ngIf="isBigScreen" style="position: relative">
+      <div
+        style="
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 60px;
+          height: 72px;
+          display: flex;
+          align-items: center;
+        "
       >
-        <mat-icon>arrow_left</mat-icon>
-        <span>Edit</span>
-      </button>
-
-      <div *ngIf="!isBigScreen" class="spacer"></div>
-
-      <button mat-button type="button" color="accent" matStepperNext>
-        <span>Send</span>
-        <mat-icon>arrow_right</mat-icon>
-      </button>
+        <button mat-icon-button (click)="sideNav.toggle()">
+          <mat-icon>new_releases</mat-icon>
+        </button>
+      </div>
     </div>
-  </mat-step>
 
-  <mat-step>
-    <ng-template matStepLabel>Send</ng-template>
+    <mat-horizontal-stepper
+      [ngClass]="{ 'big-screen': isBigScreen }"
+      [selectedIndex]="currentStepperIndex"
+      (selectionChange)="currentStepperIndex = $event.selectedIndex"
+    >
+      <mat-step
+        *ngIf="!isBigScreen"
+        [stepControl]="invoiceForm"
+        errorMessage=""
+        #createOrEditStep
+      >
+        <ng-template matStepLabel>{{
+          createOrEditStep.interacted ? "Edit" : "Create"
+        }}</ng-template>
+        <app-edit-invoice></app-edit-invoice>
 
-    <span>Send Content</span>
+        <div class="stepper-action-buttons">
+          <button mat-button type="button" color="accent" matStepperNext>
+            <span>Preview</span>
+            <mat-icon>arrow_right</mat-icon>
+          </button>
+        </div>
+      </mat-step>
 
-    <br />
-    <br />
+      <mat-step>
+        <ng-template matStepLabel>{{
+          isBigScreen ? "Edit & Preview" : "Preview"
+        }}</ng-template>
 
-    <div class="stepper-action-buttons">
-      <button mat-button type="button" color="accent" matStepperPrevious>
-        <mat-icon>arrow_left</mat-icon>
+        <div #previewContainer>
+          <app-edit-preview-invoice
+            [parentContainer]="previewContainer"
+            [editMode]="isBigScreen"
+          ></app-edit-preview-invoice>
+        </div>
 
-        <span>Preview</span>
-      </button>
-    </div>
-  </mat-step>
-</mat-horizontal-stepper>
+        <div class="stepper-action-buttons">
+          <button
+            mat-button
+            *ngIf="!isBigScreen"
+            style="margin-right: 24px"
+            color="accent"
+            type="button"
+            matStepperPrevious
+          >
+            <mat-icon>arrow_left</mat-icon>
+            <span>Edit</span>
+          </button>
+
+          <div *ngIf="!isBigScreen" class="spacer"></div>
+
+          <button mat-button type="button" color="accent" matStepperNext>
+            <span>Send</span>
+            <mat-icon>arrow_right</mat-icon>
+          </button>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Send</ng-template>
+
+        <span>Send Content</span>
+
+        <br />
+        <br />
+
+        <div class="stepper-action-buttons">
+          <button mat-button type="button" color="accent" matStepperPrevious>
+            <mat-icon>arrow_left</mat-icon>
+
+            <span>Preview</span>
+          </button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-sidenav-content>
+
+  <mat-sidenav [position]="'end'" #sideNav>
+    <mat-nav-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon color="accent">link</mat-icon>
+        <a href="https://olufemi-oyewole-invoice-ui.web.app/"
+          >Latest Release Hosted Online</a
+        >
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon color="accent">code</mat-icon>
+        <a
+          href="https://github.com/OlufemiOyewole/invoice-creation-ui/tree/latest-release"
+          >Latest Release Github Branch</a
+        >
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+</mat-sidenav-container>
