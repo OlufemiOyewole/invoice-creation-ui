@@ -13,7 +13,7 @@
                 INVOICE
               </div>
               <div>
-                Description of invoice Lorem ipsum dolor sit amet, consectetur.
+                {{ invoiceForm.get("description")?.value }}
               </div>
             </div>
           </div>
@@ -33,7 +33,7 @@
                 class="mat-display-1"
                 style="margin-bottom: 0px; max-width: 350px"
               >
-                {{ 0 | currency: "CAD" }}
+                {{ total | currency: "CAD" }}
               </div>
             </div>
           </div>
@@ -42,7 +42,7 @@
         <section class="subheader mat-subheading-2">
           <div style="flex: 4">
             <div>Billed To:</div>
-            <div></div>
+            <div>{{ invoiceForm.get("billedTo")?.value }}</div>
           </div>
           <div style="flex: 1; text-align: right">
             <div>Invoice Number:</div>
@@ -66,6 +66,80 @@
               }}
             </div>
           </div>
+        </section>
+
+        <section class="body">
+          <mat-list>
+            <mat-list-item class="line-item-header">
+              <div class="row">
+                <span class="column-description">Description</span>
+                <span class="column-unit-cost">Unit Cost</span>
+                <span class="column-quantity">Quantity</span>
+                <span class="column-total">Total</span>
+              </div>
+            </mat-list-item>
+          </mat-list>
+
+          <mat-list
+            cdkDropList
+            class="line-item-list"
+            [cdkDropListData]="lineItems.controls"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <mat-list-item
+              *ngFor="let lineItem of lineItems.controls"
+              class="line-item"
+              style="cursor: move; background-color: white"
+              cdkDrag
+              cdkDragLockAxis="y"
+            >
+              <div class="row">
+                <span class="column-description">{{
+                  lineItem.get("description")?.value
+                }}</span>
+                <span class="column-unit-cost">{{
+                  lineItem.get("unitCost")?.value
+                }}</span>
+                <span class="column-quantity">{{
+                  lineItem.get("quantity")?.value
+                }}</span>
+                <span class="column-total">
+                  {{
+                    lineItem?.get("unitCost")?.value *
+                      lineItem?.get("quantity")?.value | currency
+                  }}
+                </span>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </section>
+
+        <section class="summary" *ngIf="lineItems.controls.length">
+          <mat-list style="width: 38%">
+            <mat-list-item style="border-top: 1px solid lightgrey">
+              <div class="row">
+                <span class="column-summary-label">Subtotal :</span>
+                <span class="column-total">{{ subtotal | currency }}</span>
+              </div>
+            </mat-list-item>
+            <mat-list-item>
+              <div class="row">
+                <span class="column-summary-label"
+                  >{{ invoiceForm?.get("taxRate")?.value }}&#37;&nbsp;Tax
+                  :</span
+                >
+                <span class="column-total">{{ taxAmount | currency }}</span>
+              </div>
+            </mat-list-item>
+            <mat-list-item>
+              <div class="row">
+                <span class="column-summary-label">Total :</span>
+                <span class="column-total">
+                  <b>{{ total | currency }}</b>
+                </span>
+              </div>
+            </mat-list-item>
+          </mat-list>
         </section>
       </main>
     </mat-card>

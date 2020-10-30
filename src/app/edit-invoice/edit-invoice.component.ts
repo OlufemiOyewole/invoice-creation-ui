@@ -67,8 +67,8 @@ export class EditInvoiceComponent {
     return this.invoiceFormService.subtotal;
   }
 
-  get taxRate() {
-    return this.invoiceFormService.taxRate;
+  get taxAmount() {
+    return this.invoiceFormService.taxAmount;
   }
 
   get total() {

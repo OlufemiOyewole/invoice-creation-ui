@@ -6,8 +6,9 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 import { InvoiceFormService } from '../core/invoice-form.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-edit-preview-invoice',
@@ -30,6 +31,26 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
 
   constructor(private invoiceFormService: InvoiceFormService) {
     this.invoiceForm = this.invoiceFormService.invoiceForm;
+  }
+
+  get lineItems() {
+    return this.invoiceFormService.lineItems;
+  }
+
+  get subtotal() {
+    return this.invoiceFormService.subtotal;
+  }
+
+  get taxAmount() {
+    return this.invoiceFormService.taxAmount;
+  }
+
+  get total() {
+    return this.invoiceFormService.total;
+  }
+
+  drop(event: CdkDragDrop<AbstractControl[]>) {
+    this.invoiceFormService.drop(event);
   }
 
   setScale(windowWidth: number | undefined) {

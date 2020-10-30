@@ -67,7 +67,7 @@
     (cdkDropListDropped)="drop($event)"
   >
     <div
-      *ngFor="let _ of lineItems.controls; index as i"
+      *ngFor="let lineItem of lineItems.controls; index as i"
       class="line-item"
       cdkDrag
       cdkDragLockAxis="y"
@@ -120,7 +120,7 @@
                 type="number"
                 required
               />
-              <span matPrefix *ngIf="lineItems.get([i])?.get('unitCost')?.value"
+              <span matPrefix *ngIf="lineItem.get('unitCost')?.value"
                 >$&nbsp;</span
               >
             </mat-form-field>
@@ -148,8 +148,8 @@
 
               <div>
                 {{
-                  lineItems.get([i])?.get("unitCost")?.value *
-                    lineItems.get([i])?.get("quantity")?.value | currency
+                  lineItem.get("unitCost")?.value *
+                    lineItem.get("quantity")?.value | currency
                 }}
               </div>
             </div>
@@ -227,7 +227,7 @@
 
           <span
             ><span class="mat-body">Tax:</span>&nbsp;&nbsp;{{
-              taxRate | currency
+              taxAmount | currency
             }}</span
           >
         </mat-list-item>

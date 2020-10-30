@@ -26,10 +26,14 @@
 
 .header {
   display: flex;
-  background-color: whitesmoke;
   margin: -36px;
   padding: 36px 52px;
   margin-bottom: 24px;
+}
+.header,
+.line-item-header,
+.column-summary-label {
+  background-color: whitesmoke;
 }
 
 .header > div {
@@ -45,4 +49,84 @@
 
 .subheader > div {
   flex: 1;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.line-item-header,
+.column-summary-label {
+  font-variant: small-caps;
+  border: 1px solid whitesmoke;
+}
+
+.line-item-list {
+  padding-top: 0px;
+}
+
+.line-item-list.cdk-drop-list-dragging .line-item:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.line-item,
+.summary .mat-list-item {
+  border: 1px solid;
+  border-top: 0px;
+  border-bottom-color: lightgrey;
+  border-left-color: whitesmoke;
+  border-right-color: whitesmoke;
+  transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.column-description {
+  flex: 3;
+}
+
+.column-unit-cost,
+.column-quantity {
+  flex: 1;
+  text-align: right;
+}
+
+.column-total {
+  width: 160px;
+  text-align: right;
+}
+
+.row {
+  justify-content: space-between;
+  flex: 1;
+  display: flex;
+}
+
+.summary {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.summary .mat-list-item span {
+  text-align: right;
+}
+
+.column-summary-label {
+  flex: 1;
+  margin-left: -16px;
+  padding-left: 16px;
+  margin-top: -14px;
+  padding-top: 14px;
+  margin-bottom: -14px;
+  padding-bottom: 14px;
+  padding-right: 6px;
 }

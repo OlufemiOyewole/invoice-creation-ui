@@ -39,12 +39,12 @@ export class InvoiceFormService {
     return subtotal;
   }
 
-  get taxRate() {
+  get taxAmount() {
     return (this.invoiceForm.get('taxRate')?.value / 100) * this.subtotal;
   }
 
   get total() {
-    const total = this.subtotal + this.taxRate;
+    const total = this.subtotal + this.taxAmount;
     return total;
   }
 

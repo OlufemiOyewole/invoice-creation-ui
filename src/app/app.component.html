@@ -19,7 +19,7 @@
     <app-edit-invoice></app-edit-invoice>
 
     <div class="stepper-action-buttons">
-      <button mat-raised-button type="button" color="accent" matStepperNext>
+      <button mat-button type="button" color="accent" matStepperNext>
         <span>Preview</span>
         <mat-icon>arrow_right</mat-icon>
       </button>
@@ -39,7 +39,7 @@
 
     <div class="stepper-action-buttons">
       <button
-        mat-raised-button
+        mat-button
         *ngIf="!isBigScreen"
         style="margin-right: 24px"
         color="accent"
@@ -52,7 +52,7 @@
 
       <div *ngIf="!isBigScreen" class="spacer"></div>
 
-      <button mat-raised-button type="button" color="accent" matStepperNext>
+      <button mat-button type="button" color="accent" matStepperNext>
         <span>Send</span>
         <mat-icon>arrow_right</mat-icon>
       </button>
@@ -68,7 +68,7 @@
     <br />
 
     <div class="stepper-action-buttons">
-      <button mat-raised-button type="button" color="accent" matStepperPrevious>
+      <button mat-button type="button" color="accent" matStepperPrevious>
         <mat-icon>arrow_left</mat-icon>
 
         <span>Preview</span>
