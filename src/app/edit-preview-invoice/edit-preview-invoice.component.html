@@ -9,11 +9,16 @@
       [tabindex]="1"
       (focus)="
         _editMode
-          ? !cardHighlighted && toggleEditButtons('focus')
-          : previewCard.blur()
+          ? !showEditButtons && toggleEditButtons('show')
+          : toggleEditButtons('hide')
       "
-      (blur)="_editMode && toggleEditButtons('blur')"
-      (click)="_editMode && cardHighlighted && previewCard.blur()"
+      (click)="
+        _editMode && showEditButtons
+          ? toggleEditButtons('hide', previewCard)
+          : _editMode
+          ? toggleEditButtons('show')
+          : toggleEditButtons('hide', previewCard)
+      "
       #previewCard
     >
       <main class="preview-content">
@@ -122,6 +127,22 @@
                 </span>
               </div>
             </mat-list-item>
+
+            <div
+              *ngIf="_editMode && showEditButtons"
+              style="position: relative"
+            >
+              <button
+                mat-stroked-button
+                style="position: absolute"
+                (click)="addLineItem()"
+                color="accent"
+                appStopClickPropagation
+              >
+                <span>Add Item &nbsp;</span>
+                <mat-icon fontSet="material-icons-outlined">add_box</mat-icon>
+              </button>
+            </div>
           </mat-list>
         </section>
 

@@ -7,8 +7,14 @@ import {
   ElementRef,
 } from '@angular/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
-import { InvoiceFormService } from '../core/invoice-form.service';
+import { InvoiceFormService, LineItem } from '../core/invoice-form.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import {
+  InputComponent,
+  InputComponentData,
+  InputTarget,
+} from '../shared/input/input.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-preview-invoice',
@@ -17,11 +23,11 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 })
 export class EditPreviewInvoiceComponent implements AfterViewInit {
   @Input() parentContainer?: HTMLDivElement;
-  cardHighlighted = false;
+  showEditButtons = false;
   @Input() set editMode(editMode: boolean) {
     this._editMode = editMode;
     if (editMode) {
-      this.cardHighlighted = false;
+      this.showEditButtons = false;
     }
   }
   @ViewChild('previewContainer') previewContainerElement!: ElementRef;
@@ -37,7 +43,10 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     this.setScale(this.parentContainer?.offsetWidth);
   }
 
-  constructor(private invoiceFormService: InvoiceFormService) {
+  constructor(
+    private invoiceFormService: InvoiceFormService,
+    private dialog: MatDialog
+  ) {
     this.invoiceForm = this.invoiceFormService.invoiceForm;
   }
 
@@ -55,6 +64,36 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
 
   get total() {
     return this.invoiceFormService.total;
+  }
+
+  addLineItem() {
+    const dialogRef = this.dialog.open(InputComponent, {
+      data: {
+        target: 'line item' as InputTarget,
+        invoiceForm: undefined,
+        lineItemIndex: this.lineItems.length - 1,
+      } as InputComponentData,
+    });
+
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        const lineItem: LineItem = data.lineItem;
+        this.invoiceFormService.addLineItem(lineItem);
+      }
+    });
+  }
+
+  editLineItem() {
+    this.dialog.open(InputComponent, {
+      data: {
+        target: 'line item' as InputTarget,
+        invoiceForm: this.invoiceFormService.invoiceForm,
+      } as InputComponentData,
+    });
+  }
+
+  deleteLineItem(index: number) {
+    this.invoiceFormService.deleteLineItem(index);
   }
 
   drop(event: CdkDragDrop<AbstractControl[]>) {
@@ -82,24 +121,20 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     }, 10);
   }
 
-  toggleEditButtons(eventType: string) {
-    switch (eventType) {
-      case 'focus':
+  toggleEditButtons(visibility: string, element?: HTMLDivElement) {
+    switch (visibility) {
+      case 'show':
         setTimeout(() => {
-          this.cardHighlighted = true;
-        }, 250);
+          this.showEditButtons = true;
+        }, 150);
         break;
-      case 'blur':
-        this.cardHighlighted = false;
-        break;
-      case 'clicked':
-        setTimeout(() => {
-          this.cardHighlighted = false;
-        }, 250);
+      case 'hide':
+        this.showEditButtons = false;
+        element?.blur();
         break;
 
       default:
-        this.cardHighlighted = false;
+        this.showEditButtons = false;
         break;
     }
   }

@@ -1,0 +1,21 @@
+.mat-form-field {
+  margin-right: 18px;
+}
+
+.date-form-fields {
+  width: 108px;
+}
+
+.item-field-row {
+  display: flex;
+  align-items: center;
+}
+
+.item-field-row .mat-form-field {
+  flex: 2;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: space-evenly;
+}

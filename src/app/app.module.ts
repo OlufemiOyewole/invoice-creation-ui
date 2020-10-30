@@ -9,12 +9,16 @@ import { MaterialComponentsModule } from './core/material-components.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
 import { EditPreviewInvoiceComponent } from './edit-preview-invoice/edit-preview-invoice.component';
+import { StopClickPropagationDirective } from './shared/stop-click-propagation.directive';
+import { InputComponent } from './shared/input/input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EditInvoiceComponent,
     EditPreviewInvoiceComponent,
+    StopClickPropagationDirective,
+    InputComponent,
   ],
   imports: [
     MaterialComponentsModule,
