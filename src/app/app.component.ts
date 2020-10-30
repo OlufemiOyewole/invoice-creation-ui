@@ -22,6 +22,7 @@ export class AppComponent implements OnDestroy {
   isBigScreen = false;
   smallScreenBreakpointObserver: Subscription;
   currentStepperIndex = 0;
+  stepperIndexChecked = false;
 
   constructor(
     private invoiceFormService: InvoiceFormService,
@@ -33,6 +34,14 @@ export class AppComponent implements OnDestroy {
       .observe('(min-width: 599px)')
       .subscribe((breakPointState) => {
         this.isBigScreen = breakPointState.matches;
+
+        if (this.currentStepperIndex === 0 && this.stepperIndexChecked) {
+          if (!this.isBigScreen) {
+            setTimeout(() => {
+              this.currentStepperIndex = 1;
+            });
+          }
+        }
 
         if (this.currentStepperIndex === 1) {
           if (this.isBigScreen) {
@@ -47,6 +56,8 @@ export class AppComponent implements OnDestroy {
         if (this.currentStepperIndex === 2 && this.isBigScreen) {
           this.currentStepperIndex = 1;
         }
+
+        this.stepperIndexChecked = true;
       });
   }
 
