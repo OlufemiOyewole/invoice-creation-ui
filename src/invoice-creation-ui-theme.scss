@@ -13,7 +13,7 @@ $candy-app-primary: mat-palette($mat-blue, 800);
 $candy-app-accent: mat-palette($mat-blue);
 
 // The warn palette is optional (defaults to red).
-$candy-app-warn: mat-palette($mat-red);
+$candy-app-warn: mat-palette($mat-red, 700);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as `color` or `typography`.

@@ -1,7 +1,12 @@
-.mat-card {
+.preview-card {
   padding-top: 141.42%;
   position: relative;
-  border-radius: 0%;
+  border: 1px solid lightgrey;
+}
+
+.preview-card:focus-within {
+  border: 2px solid #2196f3;
+  outline: none;
 }
 
 .preview-container {

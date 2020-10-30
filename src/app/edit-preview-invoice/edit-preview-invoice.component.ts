@@ -17,12 +17,20 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 })
 export class EditPreviewInvoiceComponent implements AfterViewInit {
   @Input() parentContainer?: HTMLDivElement;
+  cardHighlighted = false;
+  @Input() set editMode(editMode: boolean) {
+    this._editMode = editMode;
+    if (editMode) {
+      this.cardHighlighted = false;
+    }
+  }
   @ViewChild('previewContainer') previewContainerElement!: ElementRef;
   invoiceForm: FormGroup;
   invoiceWidth = 820;
   previewHeight = '0px';
   previewScale = 'translate(-50%, 0%) scale(1)';
   scaleInterval: ReturnType<typeof setTimeout> = setTimeout(() => '');
+  _editMode = false;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -53,6 +61,10 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     this.invoiceFormService.drop(event);
   }
 
+  ngAfterViewInit() {
+    this.setScale(this.parentContainer?.offsetWidth);
+  }
+
   setScale(windowWidth: number | undefined) {
     let scale = windowWidth ? windowWidth / this.invoiceWidth : 1;
 
@@ -70,7 +82,25 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     }, 10);
   }
 
-  ngAfterViewInit() {
-    this.setScale(this.parentContainer?.offsetWidth);
+  toggleEditButtons(eventType: string) {
+    switch (eventType) {
+      case 'focus':
+        setTimeout(() => {
+          this.cardHighlighted = true;
+        }, 250);
+        break;
+      case 'blur':
+        this.cardHighlighted = false;
+        break;
+      case 'clicked':
+        setTimeout(() => {
+          this.cardHighlighted = false;
+        }, 250);
+        break;
+
+      default:
+        this.cardHighlighted = false;
+        break;
+    }
   }
 }
