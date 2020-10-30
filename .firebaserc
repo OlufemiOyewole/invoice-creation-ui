@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "olufemi-oyewole-invoice-ui": {
+      "hosting": {
+        "invoice-creation-ui": [
+          "olufemi-oyewole-invoice-ui"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "olufemi-oyewole-invoice-ui"
+  }
+}
