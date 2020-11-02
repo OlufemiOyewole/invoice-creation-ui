@@ -1,24 +1,14 @@
 <div style="position: relative" [ngStyle]="{ height: previewHeight }">
   <div
     class="preview-container"
+    appStopClickPropagation
     [ngStyle]="{ width: invoiceWidth + 'px', transform: previewScale }"
     #previewContainer
   >
     <div
       class="preview-card mat-elevation-z4"
-      [tabindex]="1"
-      (focus)="
-        _editMode
-          ? !showEditButtons && toggleEditButtons('show')
-          : toggleEditButtons('hide')
-      "
-      (click)="
-        _editMode && showEditButtons
-          ? toggleEditButtons('hide', previewCard)
-          : _editMode
-          ? toggleEditButtons('show')
-          : toggleEditButtons('hide', previewCard)
-      "
+      [ngClass]="{ 'show-edit-buttons': _editMode && showEditButtons }"
+      (click)="toggleEditButtons(previewCard)"
       #previewCard
     >
       <main class="preview-content">

@@ -121,21 +121,14 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     }, 10);
   }
 
-  toggleEditButtons(visibility: string, element?: HTMLDivElement) {
-    switch (visibility) {
-      case 'show':
-        setTimeout(() => {
-          this.showEditButtons = true;
-        }, 150);
-        break;
-      case 'hide':
-        this.showEditButtons = false;
-        element?.blur();
-        break;
-
-      default:
-        this.showEditButtons = false;
-        break;
+  toggleEditButtons(previewCardElement?: HTMLDivElement) {
+    if (this._editMode) {
+      this.showEditButtons = !this.showEditButtons;
+    } else {
+      this.showEditButtons = false;
+    }
+    if (!this.showEditButtons) {
+      previewCardElement?.blur();
     }
   }
 }
