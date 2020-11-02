@@ -1,4 +1,4 @@
-<form [formGroup]="invoiceForm" (submit)="close('okay')">
+<form [formGroup]="invoiceForm" (submit)="submit()">
   <div formArrayName="lineItems">
     <mat-card
       [formGroupName]="lineItemIndex"
@@ -70,15 +70,25 @@
       </div>
 
       <mat-card-actions [attr.align]="'center'">
-        <button mat-button type="button" (click)="close('cancel')">
-          Cancel
-        </button>
-        <button mat-button type="submit" color="accent">
-          <ng-container [ngSwitch]="target">
-            <span *ngSwitchCase="'line item'">Add</span>
-            <span *ngSwitchDefault>Save</span>
+        <ng-container [ngSwitch]="action">
+          <ng-container *ngSwitchCase="'add'">
+            <button mat-button type="button" mat-dialog-close>Cancel</button>
+
+            <button mat-button type="submit" color="accent">
+              <span>Add</span>
+            </button>
           </ng-container>
-        </button>
+          <ng-container *ngSwitchCase="'update'">
+            <button mat-button type="submit" color="accent">
+              <span>Exit</span>
+            </button>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <button mat-button type="submit" color="accent">
+              <span>Exit</span>
+            </button>
+          </ng-container>
+        </ng-container>
       </mat-card-actions>
     </mat-card>
   </div>

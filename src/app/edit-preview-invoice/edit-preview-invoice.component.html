@@ -47,13 +47,13 @@
 
         <section class="subheader mat-subheading-2">
           <div style="flex: 4">
-            <div>Billed To:</div>
+            <div class="field-label">Billed To:</div>
             <div>{{ invoiceForm.get("billedTo")?.value }}</div>
           </div>
           <div style="flex: 1; text-align: right">
-            <div>Invoice Number:</div>
-            <div>Issue Date:</div>
-            <div>Due Date:</div>
+            <div class="field-label">Invoice Number:</div>
+            <div class="field-label">Issue Date:</div>
+            <div class="field-label">Due Date:</div>
           </div>
           <div style="flex: 1; padding: 0px 16px">
             <div>{{ +invoiceForm.get("invoiceNumber")?.value }}</div>
@@ -78,10 +78,10 @@
           <mat-list>
             <mat-list-item class="line-item-header">
               <div class="row">
-                <span class="column-description">Description</span>
-                <span class="column-unit-cost">Unit Cost</span>
-                <span class="column-quantity">Quantity</span>
-                <span class="column-total">Total</span>
+                <span class="column-description field-label">Description</span>
+                <span class="column-unit-cost field-label">Unit Cost</span>
+                <span class="column-quantity field-label">Quantity</span>
+                <span class="column-total field-label">Total</span>
               </div>
             </mat-list-item>
           </mat-list>
@@ -104,7 +104,8 @@
               <button
                 mat-icon-button
                 *ngIf="_editMode && showEditButtons"
-                class="drag-handle edit-mode-item"
+                class="edit-mode-item"
+                style="left: -40px; cursor: move"
                 type="button"
                 disableRipple
                 color="accent"
@@ -117,6 +118,24 @@
                 <span class="column-description">
                   {{ lineItem.get("description")?.value }}
                 </span>
+                <div class="edit-mode-item-container">
+                  <button
+                    mat-icon-button
+                    *ngIf="_editMode && showEditButtons"
+                    class="edit-mode-item mat-elevation-z1"
+                    style="
+                      top: 50%;
+                      transform: translateY(-50%);
+                      left: -40px;
+                      background-color: white;
+                    "
+                    (click)="editLineItem(i)"
+                    color="accent"
+                    appStopClickPropagation
+                  >
+                    <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+                  </button>
+                </div>
                 <span class="column-unit-cost">
                   {{ lineItem.get("unitCost")?.value | currency }}
                 </span>
@@ -134,7 +153,8 @@
               <button
                 mat-icon-button
                 *ngIf="_editMode && showEditButtons"
-                class="delete-item-button edit-mode-item"
+                class="edit-mode-item"
+                style="right: -40px"
                 type="button"
                 (click)="deleteLineItem(i)"
                 color="accent"
@@ -168,13 +188,13 @@
           <mat-list style="width: 38%">
             <mat-list-item style="border-top: 1px solid lightgrey">
               <div class="row">
-                <span class="column-summary-label">Subtotal :</span>
+                <span class="field-label">Subtotal :</span>
                 <span class="column-total">{{ subtotal | currency }}</span>
               </div>
             </mat-list-item>
             <mat-list-item>
               <div class="row">
-                <span class="column-summary-label"
+                <span class="field-label"
                   >{{ invoiceForm?.get("taxRate")?.value }}&#37;&nbsp;Tax
                   :</span
                 >
@@ -183,7 +203,7 @@
             </mat-list-item>
             <mat-list-item>
               <div class="row">
-                <span class="column-summary-label">Total :</span>
+                <span class="field-label">Total :</span>
                 <span class="column-total">
                   <b>{{ total | currency }}</b>
                 </span>

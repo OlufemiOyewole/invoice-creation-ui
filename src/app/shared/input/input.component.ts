@@ -1,15 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LineItem } from 'src/app/core/invoice-form.service';
 
 export interface InputComponentData {
-  target: InputTarget;
   invoiceForm: FormGroup | undefined;
-  lineItemIndex?: number;
+  lineItemIndex: number;
 }
-
-export type InputTarget = 'line item' | 'date' | 'rate' | 'number' | 'text';
 
 @Component({
   selector: 'app-input',
@@ -17,6 +14,7 @@ export type InputTarget = 'line item' | 'date' | 'rate' | 'number' | 'text';
   styleUrls: ['./input.component.css'],
 })
 export class InputComponent {
+  action: 'add' | 'update';
   invoiceForm: FormGroup = this.fb.group({
     invoiceNumber: ['000001'],
     description: ['', Validators.required],
@@ -39,7 +37,6 @@ export class InputComponent {
     taxRate: ['', [Validators.max(99), Validators.min(0)]],
   });
   lineItemIndex = 0;
-  target: string;
 
   constructor(
     public dialogRef: MatDialogRef<InputComponent>,
@@ -47,30 +44,12 @@ export class InputComponent {
     public data: InputComponentData,
     private fb: FormBuilder
   ) {
-    this.target = this.data?.target;
-    if (this.data.invoiceForm !== undefined) {
-      if (this.data.lineItemIndex !== undefined) {
-        this.lineItemIndex = this.data.lineItemIndex;
-        const lineItem = this.fb.group({
-          description: [
-            this.data.invoiceForm.get(['lineItems', this.data.lineItemIndex])
-              ?.value,
-            Validators.required,
-          ],
-          unitCost: [
-            this.data.invoiceForm.get(['lineItems', this.data.lineItemIndex])
-              ?.value,
-            Validators.required,
-          ],
-          quantity: [
-            this.data.invoiceForm.get(['lineItems', this.data.lineItemIndex])
-              ?.value,
-            [Validators.required, Validators.min(1)],
-          ],
-        });
-
-        (this.invoiceForm.get('lineItems') as FormArray).insert(0, lineItem);
-      }
+    if (this.data?.invoiceForm) {
+      this.invoiceForm = this.data.invoiceForm;
+      this.lineItemIndex = this.data.lineItemIndex || 0;
+      this.action = 'update';
+    } else {
+      this.action = 'add';
     }
   }
 
@@ -78,19 +57,19 @@ export class InputComponent {
     return this.invoiceForm.get(['lineItems', this.lineItemIndex]);
   }
 
-  close(action: 'okay' | 'cancel') {
-    const lineItem: LineItem = {
-      description: this.lineItem?.get('description')?.value,
-      unitCost: this.lineItem?.get('unitCost')?.value,
-      quantity: this.lineItem?.get('quantity')?.value,
-    };
-    switch (action) {
-      case 'okay':
-        this.dialogRef.close({ lineItem });
+  submit() {
+    switch (this.action) {
+      case 'update':
+        this.dialogRef.close();
         break;
 
-      case 'cancel':
-        this.dialogRef.close();
+      case 'add':
+        const lineItem: LineItem = {
+          description: this.lineItem?.get('description')?.value,
+          unitCost: this.lineItem?.get('unitCost')?.value,
+          quantity: this.lineItem?.get('quantity')?.value,
+        };
+        this.dialogRef.close({ lineItem });
         break;
 
       default:

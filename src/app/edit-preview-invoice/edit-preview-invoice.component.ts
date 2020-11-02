@@ -12,7 +12,6 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
   InputComponent,
   InputComponentData,
-  InputTarget,
 } from '../shared/input/input.component';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -101,13 +100,7 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
   }
 
   addLineItem() {
-    const dialogRef = this.dialog.open(InputComponent, {
-      data: {
-        target: 'line item' as InputTarget,
-        invoiceForm: undefined,
-        lineItemIndex: this.lineItems.length - 1,
-      } as InputComponentData,
-    });
+    const dialogRef = this.dialog.open(InputComponent);
 
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
@@ -117,11 +110,11 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     });
   }
 
-  editLineItem() {
+  editLineItem(index: number) {
     this.dialog.open(InputComponent, {
       data: {
-        target: 'line item' as InputTarget,
         invoiceForm: this.invoiceFormService.invoiceForm,
+        lineItemIndex: index,
       } as InputComponentData,
     });
   }
