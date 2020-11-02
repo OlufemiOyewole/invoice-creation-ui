@@ -10,7 +10,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 export interface LineItem {
   description: string;
-  unitCost: number;
+  unitCost?: number;
   quantity: number;
 }
 @Injectable({
@@ -54,13 +54,13 @@ export class InvoiceFormService {
     return total;
   }
 
-  addLineItem(values?: LineItem) {
+  addLineItem(values: LineItem) {
     this.lineItems.push(
       this.fb.group({
         description: [values?.description, Validators.required],
         unitCost: [
           values?.unitCost,
-          [Validators.required, Validators.min(0), Validators.max(1000000000)],
+          [Validators.min(0), Validators.max(1000000000)],
         ],
         quantity: [
           values?.quantity,

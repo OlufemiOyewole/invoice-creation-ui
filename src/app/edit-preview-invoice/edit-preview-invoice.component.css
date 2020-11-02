@@ -134,6 +134,10 @@
   text-align: right;
 }
 
+.required-field {
+  color: #d32f2f;
+}
+
 .row {
   justify-content: space-between;
   flex: 1;

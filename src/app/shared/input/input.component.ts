@@ -25,7 +25,7 @@ export class InputComponent {
       this.fb.group({
         description: ['', Validators.required],
         unitCost: [
-          0,
+          undefined,
           [Validators.required, Validators.min(0), Validators.max(1000000000)],
         ],
         quantity: [

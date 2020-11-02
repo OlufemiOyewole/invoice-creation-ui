@@ -76,7 +76,7 @@ export class EditInvoiceComponent {
   }
 
   addLineItem() {
-    this.invoiceFormService.addLineItem();
+    this.invoiceFormService.addLineItem({ description: '', quantity: 1 });
   }
 
   deleteLineItem(index: number) {

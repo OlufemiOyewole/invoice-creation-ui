@@ -115,9 +115,15 @@
               </button>
 
               <div class="row">
-                <span class="column-description">
-                  {{ lineItem.get("description")?.value }}
+                <span
+                  class="column-description"
+                  [ngClass]="{
+                    'required-field': !lineItem.get('description')?.value
+                  }"
+                >
+                  {{ lineItem.get("description")?.value || "*" }}
                 </span>
+
                 <div class="edit-mode-item-container">
                   <button
                     mat-icon-button
@@ -136,12 +142,20 @@
                     <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
                   </button>
                 </div>
+
                 <span class="column-unit-cost">
-                  {{ lineItem.get("unitCost")?.value | currency }}
+                  {{ lineItem.get("unitCost")?.value || 0 | currency }}
                 </span>
-                <span class="column-quantity">
-                  {{ lineItem.get("quantity")?.value }}
+
+                <span
+                  class="column-quantity"
+                  [ngClass]="{
+                    'required-field': !lineItem.get('quantity')?.value
+                  }"
+                >
+                  {{ lineItem.get("quantity")?.value || 0 }}
                 </span>
+
                 <span class="column-total">
                   {{
                     lineItem?.get("unitCost")?.value *
