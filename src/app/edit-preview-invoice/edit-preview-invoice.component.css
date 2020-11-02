@@ -2,11 +2,13 @@
   padding-top: 141.42%;
   position: relative;
   border: 1px solid lightgrey;
+  margin-top: 2px;
+  cursor: pointer;
 }
 
 .preview-card.show-edit-buttons {
-  border: 2px solid #2196f3;
-  outline: none;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px #2196f3;
 }
 
 .preview-container {
@@ -35,6 +37,7 @@
   padding: 36px 52px;
   margin-bottom: 24px;
 }
+
 .header,
 .line-item-header,
 .column-summary-label {
