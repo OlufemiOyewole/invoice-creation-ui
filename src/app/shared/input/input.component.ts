@@ -26,8 +26,14 @@ export class InputComponent {
     lineItems: this.fb.array([
       this.fb.group({
         description: ['', Validators.required],
-        unitCost: [0, Validators.required],
-        quantity: [1, [Validators.required, Validators.min(1)]],
+        unitCost: [
+          0,
+          [Validators.required, Validators.min(0), Validators.max(1000000000)],
+        ],
+        quantity: [
+          1,
+          [Validators.required, Validators.min(1), Validators.max(1000000000)],
+        ],
       }),
     ]),
     taxRate: ['', [Validators.max(99), Validators.min(0)]],
@@ -47,21 +53,18 @@ export class InputComponent {
         this.lineItemIndex = this.data.lineItemIndex;
         const lineItem = this.fb.group({
           description: [
-            this.data.invoiceForm
-              .get('lineItems')
-              ?.get([this.data.lineItemIndex])?.value,
+            this.data.invoiceForm.get(['lineItems', this.data.lineItemIndex])
+              ?.value,
             Validators.required,
           ],
           unitCost: [
-            this.data.invoiceForm
-              .get('lineItems')
-              ?.get([this.data.lineItemIndex])?.value,
+            this.data.invoiceForm.get(['lineItems', this.data.lineItemIndex])
+              ?.value,
             Validators.required,
           ],
           quantity: [
-            this.data.invoiceForm
-              .get('lineItems')
-              ?.get([this.data.lineItemIndex])?.value,
+            this.data.invoiceForm.get(['lineItems', this.data.lineItemIndex])
+              ?.value,
             [Validators.required, Validators.min(1)],
           ],
         });
@@ -72,7 +75,7 @@ export class InputComponent {
   }
 
   get lineItem() {
-    return this.invoiceForm.get('lineItems')?.get([this.lineItemIndex]);
+    return this.invoiceForm.get(['lineItems', this.lineItemIndex]);
   }
 
   close(action: 'okay' | 'cancel') {

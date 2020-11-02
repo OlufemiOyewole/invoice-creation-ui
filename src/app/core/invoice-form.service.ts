@@ -24,7 +24,7 @@ export class InvoiceFormService {
     issueDate: [new Date(), Validators.required],
     dueDate: [''],
     lineItems: this.fb.array([]),
-    taxRate: ['', [Validators.max(99), Validators.min(0)]],
+    taxRate: ['', [Validators.min(0), Validators.max(99)]],
   });
 
   constructor(private fb: FormBuilder) {}
@@ -58,8 +58,14 @@ export class InvoiceFormService {
     this.lineItems.push(
       this.fb.group({
         description: [values?.description, Validators.required],
-        unitCost: [values?.unitCost, Validators.required],
-        quantity: [values?.quantity, [Validators.required, Validators.min(1)]],
+        unitCost: [
+          values?.unitCost,
+          [Validators.required, Validators.min(0), Validators.max(1000000000)],
+        ],
+        quantity: [
+          values?.quantity,
+          [Validators.required, Validators.min(1), Validators.max(1000000000)],
+        ],
       })
     );
   }
