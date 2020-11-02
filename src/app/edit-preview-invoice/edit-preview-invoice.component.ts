@@ -15,11 +15,45 @@ import {
   InputTarget,
 } from '../shared/input/input.component';
 import { MatDialog } from '@angular/material/dialog';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  keyframes,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-edit-preview-invoice',
   templateUrl: './edit-preview-invoice.component.html',
   styleUrls: ['./edit-preview-invoice.component.css'],
+  animations: [
+    trigger('addOrRemoveLineItem', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          marginTop: '-49px',
+        }),
+        animate(
+          '0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
+          keyframes([
+            style({ opacity: 0, marginTop: '-5px', offset: 0.9 }),
+            style({ opacity: 1, marginTop: '0px', offset: 1 }),
+          ])
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
+          keyframes([
+            style({ opacity: 1, marginTop: '0px', offset: 0 }),
+            style({ opacity: 0, marginTop: '-9px', offset: 0.2 }),
+            style({ opacity: 0, marginTop: '-49px', offset: 1 }),
+          ])
+        ),
+      ]),
+    ]),
+  ],
 })
 export class EditPreviewInvoiceComponent implements AfterViewInit {
   @Input() parentContainer?: HTMLDivElement;

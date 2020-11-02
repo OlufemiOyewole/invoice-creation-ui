@@ -93,12 +93,25 @@
             (cdkDropListDropped)="drop($event)"
           >
             <mat-list-item
-              *ngFor="let lineItem of lineItems.controls"
+              *ngFor="let lineItem of lineItems.controls; index as i"
               class="line-item"
               style="cursor: move; background-color: white"
               cdkDrag
               cdkDragLockAxis="y"
+              @addOrRemoveLineItem
             >
+              <button
+                mat-icon-button
+                *ngIf="_editMode && showEditButtons"
+                class="drag-handle"
+                type="button"
+                disableRipple
+                color="accent"
+                cdkDragHandle
+              >
+                <mat-icon>drag_handle</mat-icon>
+              </button>
+
               <div class="row">
                 <span class="column-description">{{
                   lineItem.get("description")?.value
@@ -116,6 +129,18 @@
                   }}
                 </span>
               </div>
+
+              <button
+                mat-icon-button
+                *ngIf="_editMode && showEditButtons"
+                class="delete-item-button"
+                type="button"
+                (click)="deleteLineItem(i)"
+                color="accent"
+                appStopClickPropagation
+              >
+                <mat-icon>delete_forever</mat-icon>
+              </button>
             </mat-list-item>
 
             <div
@@ -123,8 +148,8 @@
               style="position: relative"
             >
               <button
-                mat-stroked-button
-                style="position: absolute"
+                mat-button
+                class="add-item-button"
                 (click)="addLineItem()"
                 color="accent"
                 appStopClickPropagation
