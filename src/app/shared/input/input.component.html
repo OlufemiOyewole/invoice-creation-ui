@@ -70,7 +70,9 @@
       </div>
 
       <mat-card-actions [attr.align]="'center'">
-        <button mat-button (click)="close('cancel')">Cancel</button>
+        <button mat-button type="button" (click)="close('cancel')">
+          Cancel
+        </button>
         <button mat-button type="submit" color="accent">
           <ng-container [ngSwitch]="target">
             <span *ngSwitchCase="'line item'">Add</span>
