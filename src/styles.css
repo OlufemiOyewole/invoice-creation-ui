@@ -37,3 +37,8 @@ mat-card.line-items .mat-card-header-text {
   justify-content: flex-end;
   padding: 0px;
 }
+
+.preview-content .mat-list-base .mat-list-item .mat-list-item-content {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}

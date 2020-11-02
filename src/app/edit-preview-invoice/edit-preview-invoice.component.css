@@ -90,9 +90,11 @@
   cursor: move;
 }
 
-.drag-handle,
-.delete-item-button,
-.add-item-button {
+.edit-mode-item-container {
+  position: relative;
+}
+
+.edit-mode-item {
   position: absolute;
 }
 
@@ -118,6 +120,11 @@
   border-left-color: whitesmoke;
   border-right-color: whitesmoke;
   transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.preview-content .mat-list-item {
+  height: unset;
+  min-height: 48px;
 }
 
 .column-description {
@@ -154,9 +161,9 @@
   flex: 1;
   margin-left: -16px;
   padding-left: 16px;
-  margin-top: -14px;
+  margin-top: -15px;
   padding-top: 14px;
-  margin-bottom: -14px;
-  padding-bottom: 14px;
+  margin-bottom: -15px;
+  padding-bottom: 12px;
   padding-right: 6px;
 }

@@ -95,15 +95,16 @@
             <mat-list-item
               *ngFor="let lineItem of lineItems.controls; index as i"
               class="line-item"
-              style="cursor: move; background-color: white"
+              style="background-color: white"
               cdkDrag
               cdkDragLockAxis="y"
+              [cdkDragDisabled]="!(_editMode && showEditButtons)"
               @addOrRemoveLineItem
             >
               <button
                 mat-icon-button
                 *ngIf="_editMode && showEditButtons"
-                class="drag-handle"
+                class="drag-handle edit-mode-item"
                 type="button"
                 disableRipple
                 color="accent"
@@ -113,15 +114,15 @@
               </button>
 
               <div class="row">
-                <span class="column-description">{{
-                  lineItem.get("description")?.value
-                }}</span>
-                <span class="column-unit-cost">{{
-                  lineItem.get("unitCost")?.value
-                }}</span>
-                <span class="column-quantity">{{
-                  lineItem.get("quantity")?.value
-                }}</span>
+                <span class="column-description">
+                  {{ lineItem.get("description")?.value }}
+                </span>
+                <span class="column-unit-cost">
+                  {{ lineItem.get("unitCost")?.value | currency }}
+                </span>
+                <span class="column-quantity">
+                  {{ lineItem.get("quantity")?.value }}
+                </span>
                 <span class="column-total">
                   {{
                     lineItem?.get("unitCost")?.value *
@@ -133,23 +134,25 @@
               <button
                 mat-icon-button
                 *ngIf="_editMode && showEditButtons"
-                class="delete-item-button"
+                class="delete-item-button edit-mode-item"
                 type="button"
                 (click)="deleteLineItem(i)"
                 color="accent"
                 appStopClickPropagation
               >
-                <mat-icon>delete_forever</mat-icon>
+                <mat-icon fontSet="material-icons-outlined"
+                  >delete_forever</mat-icon
+                >
               </button>
             </mat-list-item>
 
             <div
               *ngIf="_editMode && showEditButtons"
-              style="position: relative"
+              class="edit-mode-item-container"
             >
               <button
                 mat-button
-                class="add-item-button"
+                class="edit-mode-item"
                 (click)="addLineItem()"
                 color="accent"
                 appStopClickPropagation
