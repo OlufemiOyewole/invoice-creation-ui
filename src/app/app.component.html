@@ -1,6 +1,6 @@
 <mat-toolbar
   [class]="isBigScreen ? 'big-screen-toolbar' : ''"
-  (click)="editPreviewInvoice.showEditButtons = false"
+  (click)="editPreviewInvoice.hideEditButtons()"
   >Invoice #{{ +invoiceForm.get("invoiceNumber")?.value }}</mat-toolbar
 >
 
@@ -8,7 +8,7 @@
   [ngClass]="{ 'big-screen': isBigScreen }"
   [selectedIndex]="currentStepperIndex"
   (selectionChange)="currentStepperIndex = $event.selectedIndex"
-  (click)="editPreviewInvoice.showEditButtons = false"
+  (click)="editPreviewInvoice.hideEditButtons()"
 >
   <mat-step
     *ngIf="!isBigScreen"

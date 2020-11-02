@@ -4,6 +4,7 @@
   border: 1px solid lightgrey;
   margin-top: 2px;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .preview-card.show-edit-buttons {
@@ -20,6 +21,36 @@
   z-index: 1;
   position: absolute;
   border-radius: 0px;
+}
+
+.toggle-info {
+  position: absolute;
+  z-index: 2;
+  width: 160px;
+  height: 160px;
+  top: 72px;
+  left: 256px;
+  color: #1565c0;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 0 0px 162px rgba(32, 148, 243, 0.2),
+    0 0 0px 342px rgba(32, 148, 243, 0.2), 0 0 0px 654px rgba(32, 148, 243, 0.2),
+    0 0 0px 994px rgba(32, 148, 243, 0.2);
+  display: flex;
+  align-items: center;
+  animation: 2.5s fadeIn;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .preview-content {

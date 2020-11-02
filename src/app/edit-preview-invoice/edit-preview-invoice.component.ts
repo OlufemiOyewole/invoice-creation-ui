@@ -64,12 +64,13 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     }
   }
   @ViewChild('previewContainer') previewContainerElement!: ElementRef;
+  _editMode = false;
+  displayToggleInfo = true;
   invoiceForm: FormGroup;
   invoiceWidth = 820;
   previewHeight = '0px';
   previewScale = 'translate(-50%, 0%) scale(1)';
   scaleInterval: ReturnType<typeof setTimeout> = setTimeout(() => '');
-  _editMode = false;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -127,6 +128,10 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     this.invoiceFormService.drop(event);
   }
 
+  hideEditButtons() {
+    this.showEditButtons = this.displayToggleInfo = false;
+  }
+
   ngAfterViewInit() {
     this.setScale(this.parentContainer?.offsetWidth);
   }
@@ -149,6 +154,10 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
   }
 
   toggleEditButtons(previewCardElement?: HTMLDivElement) {
+    if (this.displayToggleInfo) {
+      this.displayToggleInfo = false;
+    }
+
     if (this._editMode) {
       this.showEditButtons = !this.showEditButtons;
     } else {

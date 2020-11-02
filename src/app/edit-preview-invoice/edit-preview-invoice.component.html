@@ -11,6 +11,10 @@
       (click)="toggleEditButtons(previewCard)"
       #previewCard
     >
+      <div *ngIf="_editMode && displayToggleInfo" class="toggle-info mat-title">
+        <span style="flex: 1">Click to Edit</span>
+      </div>
+
       <main class="preview-content">
         <section class="header">
           <div style="flex: 2">
