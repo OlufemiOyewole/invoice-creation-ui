@@ -23,7 +23,21 @@
                 INVOICE
               </div>
               <div>
-                {{ invoiceForm.get("description")?.value }}
+                <div class="edit-mode-item-container">
+                  <button
+                    mat-icon-button
+                    *ngIf="_editMode && showEditButtons"
+                    class="edit-mode-item mat-elevation-z1"
+                    style="left: -46px"
+                    (click)="updateField('description')"
+                    color="accent"
+                    appStopClickPropagation
+                  >
+                    <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+                  </button>
+                </div>
+
+                <span>{{ invoiceForm.get("description")?.value }}</span>
               </div>
             </div>
           </div>
@@ -51,8 +65,27 @@
 
         <section class="subheader mat-subheading-2">
           <div style="flex: 4">
-            <div class="field-label">Billed To:</div>
-            <div>{{ invoiceForm.get("billedTo")?.value }}</div>
+            <div class="field-label">
+              <span>Billed To:</span>
+
+              <span class="edit-mode-item-container">
+                <button
+                  mat-icon-button
+                  *ngIf="_editMode && showEditButtons"
+                  class="edit-mode-item edit-mode-inline-item mat-elevation-z1"
+                  style="right: -48px; margin-top: -4px"
+                  (click)="updateField('billed to')"
+                  color="accent"
+                  appStopClickPropagation
+                >
+                  <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+                </button>
+              </span>
+            </div>
+
+            <div>
+              {{ invoiceForm.get("billedTo")?.value }}
+            </div>
           </div>
           <div style="flex: 1; text-align: right">
             <div class="field-label">Invoice Number:</div>
@@ -132,13 +165,8 @@
                   <button
                     mat-icon-button
                     *ngIf="_editMode && showEditButtons"
-                    class="edit-mode-item mat-elevation-z1"
-                    style="
-                      top: 50%;
-                      transform: translateY(-50%);
-                      left: -40px;
-                      background-color: white;
-                    "
+                    class="edit-mode-item edit-mode-inline-item mat-elevation-z1"
+                    style="left: -40px"
                     (click)="updateLineItem(i)"
                     color="accent"
                     appStopClickPropagation
@@ -210,20 +238,16 @@
                 <span class="column-total">{{ subtotal | currency }}</span>
               </div>
             </mat-list-item>
+
             <mat-list-item>
               <div class="row">
                 <div class="edit-mode-item-container">
                   <button
                     mat-icon-button
                     *ngIf="_editMode && showEditButtons"
-                    class="edit-mode-item mat-elevation-z1"
-                    style="
-                      top: 50%;
-                      transform: translateY(-50%);
-                      left: -40px;
-                      background-color: white;
-                    "
-                    (click)="updateTaxRate()"
+                    class="edit-mode-item edit-mode-inline-item mat-elevation-z1"
+                    style="left: -38px"
+                    (click)="updateField('tax rate')"
                     color="accent"
                     appStopClickPropagation
                   >
@@ -238,6 +262,7 @@
                 <span class="column-total">{{ taxAmount | currency }}</span>
               </div>
             </mat-list-item>
+
             <mat-list-item>
               <div class="row">
                 <span class="field-label">Total :</span>

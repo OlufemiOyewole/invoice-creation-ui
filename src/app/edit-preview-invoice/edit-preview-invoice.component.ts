@@ -12,6 +12,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
   InputComponent,
   InputComponentData,
+  InputField,
 } from '../shared/input/input.component';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -113,22 +114,22 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     });
   }
 
+  updateField(inputField: InputField) {
+    this.dialog.open(InputComponent, {
+      backdropClass: [],
+      data: {
+        inputField,
+        invoiceForm: this.invoiceFormService.invoiceForm,
+      } as InputComponentData,
+    });
+  }
+
   updateLineItem(index: number) {
     this.dialog.open(InputComponent, {
       backdropClass: [],
       data: {
         inputField: 'line item',
         lineItemIndex: index,
-        invoiceForm: this.invoiceFormService.invoiceForm,
-      } as InputComponentData,
-    });
-  }
-
-  updateTaxRate() {
-    this.dialog.open(InputComponent, {
-      backdropClass: [],
-      data: {
-        inputField: 'tax rate',
         invoiceForm: this.invoiceFormService.invoiceForm,
       } as InputComponentData,
     });

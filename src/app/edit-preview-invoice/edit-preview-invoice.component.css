@@ -114,6 +114,12 @@
 
 .edit-mode-item {
   position: absolute;
+  background-color: white;
+}
+
+.edit-mode-inline-item {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .line-item-header,

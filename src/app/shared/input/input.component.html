@@ -1,6 +1,26 @@
 <form [formGroup]="invoiceForm" (submit)="close()">
   <mat-card class="mat-elevation-z0">
     <ng-container [ngSwitch]="inputField">
+      <ng-container *ngSwitchCase="'description'">
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input
+            matInput
+            formControlName="description"
+            type="text"
+            placeholder="Description of invoice"
+            required
+          />
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'billed to'">
+        <mat-form-field>
+          <mat-label>Billed to</mat-label>
+          <input matInput formControlName="billedTo" type="text" required />
+        </mat-form-field>
+      </ng-container>
+
       <ng-container *ngSwitchCase="'line item'">
         <div formArrayName="lineItems">
           <div

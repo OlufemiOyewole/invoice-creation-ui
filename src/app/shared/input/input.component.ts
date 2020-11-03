@@ -9,7 +9,7 @@ export interface InputComponentData {
   lineItemIndex?: number;
 }
 
-type InputField = 'description' | 'billedTo' | 'line item' | 'tax rate';
+export type InputField = 'description' | 'billed to' | 'line item' | 'tax rate';
 
 @Component({
   selector: 'app-input',
