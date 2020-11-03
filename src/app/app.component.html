@@ -8,8 +8,7 @@
   [ngClass]="{ 'big-screen': isBigScreen }"
   [selectedIndex]="currentStepperIndex"
   (selectionChange)="
-    currentStepperIndex = $event.selectedIndex;
-    editPreviewInvoice.formTouched = true
+    currentStepperIndex = $event.selectedIndex; stepperChanged()
   "
   (click)="editPreviewInvoice.hideEditButtons()"
 >

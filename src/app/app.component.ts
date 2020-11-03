@@ -62,6 +62,10 @@ export class AppComponent implements OnDestroy {
       });
   }
 
+  stepperChanged() {
+    this.invoiceFormService.stepperChanged();
+  }
+
   ngOnDestroy() {
     this.smallScreenBreakpointObserver?.unsubscribe();
   }

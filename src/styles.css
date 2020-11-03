@@ -43,3 +43,8 @@ mat-card.line-items .mat-card-header-text {
   padding-top: 14px;
   padding-bottom: 14px;
 }
+
+.required-field-color,
+mat-hint.mat-hint.required-field-color {
+  color: #d32f2f;
+}

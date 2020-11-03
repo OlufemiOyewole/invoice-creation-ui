@@ -9,7 +9,8 @@ import {
 } from '@angular/animations';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
-import { InvoiceFormService } from '../core/invoice-form.service';
+import { InvoiceFormService, FormState } from '../core/invoice-form.service';
+import { DateFilterFn } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-edit-invoice',
@@ -44,19 +45,16 @@ import { InvoiceFormService } from '../core/invoice-form.service';
   ],
 })
 export class EditInvoiceComponent {
-  dateFilter = (d: Date | null): boolean => {
-    const day = d || new Date();
-    const today = new Date();
-    day.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
-
-    return day.getTime() >= today.getTime();
-  };
-
+  dueDateFilter: DateFilterFn<Date | null>;
+  formState: FormState;
   invoiceForm: FormGroup;
+  issueDateFilter: DateFilterFn<Date | null>;
 
   constructor(private invoiceFormService: InvoiceFormService) {
     this.invoiceForm = this.invoiceFormService.invoiceForm;
+    this.issueDateFilter = this.invoiceFormService.issueDateFilter;
+    this.dueDateFilter = this.invoiceFormService.dueDateFilter;
+    this.formState = this.invoiceFormService.formState;
   }
 
   get lineItems() {

@@ -5,6 +5,7 @@
   margin-top: 2px;
   cursor: pointer;
   overflow: hidden;
+  background-color: white;
 }
 
 .preview-card.show-edit-buttons {
@@ -117,6 +118,16 @@
   background-color: white;
 }
 
+.edit-mode-item input {
+  position: relative;
+  z-index: -1;
+  width: 0px;
+  height: 0px;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+}
+
 .edit-mode-inline-item {
   top: 50%;
   transform: translateY(-50%);
@@ -173,10 +184,6 @@
 .column-total {
   width: 160px;
   text-align: right;
-}
-
-.required-field {
-  color: #d32f2f;
 }
 
 .row {

@@ -7,7 +7,11 @@ import {
   ElementRef,
 } from '@angular/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
-import { InvoiceFormService, LineItem } from '../core/invoice-form.service';
+import {
+  InvoiceFormService,
+  LineItem,
+  FormState,
+} from '../core/invoice-form.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
   InputComponent,
@@ -22,6 +26,7 @@ import {
   animate,
   keyframes,
 } from '@angular/animations';
+import { DateFilterFn } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-edit-preview-invoice',
@@ -67,9 +72,11 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
   @ViewChild('previewContainer') previewContainerElement!: ElementRef;
   _editMode = false;
   displayToggleInfo = true;
+  dueDateFilter: DateFilterFn<Date | null>;
+  formState: FormState;
   invoiceForm: FormGroup;
-  formTouched = false;
   invoiceWidth = 820;
+  issueDateFilter: DateFilterFn<Date | null>;
   previewHeight = '0px';
   previewScale = 'translate(-50%, 0%) scale(1)';
   scaleInterval: ReturnType<typeof setTimeout> = setTimeout(() => '');
@@ -84,6 +91,9 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     private dialog: MatDialog
   ) {
     this.invoiceForm = this.invoiceFormService.invoiceForm;
+    this.issueDateFilter = this.invoiceFormService.issueDateFilter;
+    this.dueDateFilter = this.invoiceFormService.dueDateFilter;
+    this.formState = this.invoiceFormService.formState;
   }
 
   get lineItems() {

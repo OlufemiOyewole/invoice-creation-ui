@@ -39,7 +39,7 @@
 
                 <ng-container
                   *ngIf="
-                    invoiceForm.get('description')?.touched || formTouched;
+                    invoiceForm.get('description')?.touched || formState.seen;
                     else description
                   "
                 >
@@ -48,7 +48,7 @@
                   }}</span>
                   <span
                     *ngIf="!invoiceForm.get('description')?.value"
-                    class="required-field mat-subheading-2"
+                    class="required-field-color mat-subheading-2"
                     >*</span
                   >
                 </ng-container>
@@ -104,7 +104,7 @@
             <div>
               <ng-container
                 *ngIf="
-                  invoiceForm.get('billedTo')?.touched || formTouched;
+                  invoiceForm.get('billedTo')?.touched || formState.seen;
                   else billedTo
                 "
               >
@@ -113,7 +113,7 @@
                 }}</span>
                 <span
                   *ngIf="!invoiceForm.get('billedTo')?.value"
-                  class="required-field mat-subheading-2"
+                  class="required-field-color mat-subheading-2"
                   >*</span
                 >
               </ng-container>
@@ -131,18 +131,94 @@
           <div style="flex: 1; padding: 0px 16px">
             <div>{{ +invoiceForm.get("invoiceNumber")?.value }}</div>
             <div>
-              {{
-                +invoiceForm.get("issueDate")?.value
-                  ? (+invoiceForm.get("issueDate")?.value | date)
-                  : "&mdash;"
-              }}
+              <span>
+                {{
+                  +invoiceForm.get("issueDate")?.value
+                    ? (+invoiceForm.get("issueDate")?.value | date)
+                    : "&mdash;"
+                }}
+              </span>
+              <span class="edit-mode-item-container">
+                <form
+                  [formGroup]="invoiceForm"
+                  *ngIf="_editMode && showEditButtons"
+                  style="display: inline; top: -24px; left: 16px"
+                  class="edit-mode-item"
+                >
+                  <input
+                    matInput
+                    formControlName="issueDate"
+                    [matDatepickerFilter]="issueDateFilter"
+                    [matDatepicker]="issueDatePicker"
+                  />
+                  <mat-datepicker #issueDatePicker></mat-datepicker>
+                  <button
+                    mat-icon-button
+                    class="mat-elevation-z1"
+                    (click)="issueDatePicker.open()"
+                    color="accent"
+                    appStopClickPropagation
+                  >
+                    <mat-icon>today</mat-icon>
+                  </button>
+                </form>
+              </span>
             </div>
+
             <div>
-              {{
-                +invoiceForm.get("dueDate")?.value
-                  ? (+invoiceForm.get("dueDate")?.value | date)
-                  : "&mdash;"
-              }}
+              <span
+                [ngClass]="{
+                  'required-field-color': invoiceForm.getError('invalidDueDate')
+                }"
+              >
+                {{
+                  +invoiceForm.get("dueDate")?.value
+                    ? (+invoiceForm.get("dueDate")?.value | date)
+                    : "&mdash;"
+                }}
+              </span>
+
+              <span class="edit-mode-item-container">
+                <form
+                  [formGroup]="invoiceForm"
+                  *ngIf="_editMode && showEditButtons"
+                  style="display: inline; top: 0px; left: 16px"
+                  class="edit-mode-item"
+                >
+                  <input
+                    matInput
+                    formControlName="dueDate"
+                    [matDatepickerFilter]="dueDateFilter"
+                    [matDatepicker]="dueDatePicker"
+                  />
+                  <mat-datepicker #dueDatePicker></mat-datepicker>
+                  <button
+                    mat-icon-button
+                    class="mat-elevation-z1"
+                    (click)="dueDatePicker.open()"
+                    color="accent"
+                    appStopClickPropagation
+                  >
+                    <mat-icon>event</mat-icon>
+                  </button>
+
+                  <div
+                    *ngIf="invoiceForm.getError('invalidDueDate')"
+                    style="
+                      position: absolute;
+                      width: 106px;
+                      line-height: 16px;
+                      text-align: center;
+                      left: -116px;
+                      top: 20px;
+                      z-index: 1;
+                    "
+                    class="mat-small required-field-color"
+                  >
+                    Must be on or after issue date
+                  </div>
+                </form>
+              </span>
             </div>
           </div>
         </section>
@@ -191,7 +267,7 @@
                 <span
                   class="column-description"
                   [ngClass]="{
-                    'required-field': !lineItem.get('description')?.value
+                    'required-field-color': !lineItem.get('description')?.value
                   }"
                 >
                   {{ lineItem.get("description")?.value || "*" }}
@@ -215,7 +291,7 @@
                   <ng-container
                     *ngIf="lineItem.get('unitCost')?.invalid; else unitCost"
                   >
-                    <span class="required-field">*</span>
+                    <span class="required-field-color">*</span>
                   </ng-container>
 
                   <ng-template #unitCost>
@@ -226,7 +302,7 @@
                 <span
                   class="column-quantity"
                   [ngClass]="{
-                    'required-field': !lineItem.get('quantity')?.value
+                    'required-field-color': !lineItem.get('quantity')?.value
                   }"
                 >
                   {{ lineItem.get("quantity")?.value || 0 }}
@@ -255,6 +331,19 @@
                 >
               </button>
             </mat-list-item>
+
+            <div
+              *ngIf="
+                invoiceForm.getError('invalidLineItemsCount') && formState.seen
+              "
+              style="position: relative"
+            >
+              <span
+                style="position: absolute; left: -16px; top: 6px"
+                class="required-field-color mat-subheading-2"
+                >*</span
+              >
+            </div>
 
             <div
               *ngIf="_editMode && showEditButtons"
@@ -302,7 +391,8 @@
                 <span class="field-label">
                   <span
                     [ngClass]="{
-                      'required-field': invoiceForm?.get('taxRate')?.invalid
+                      'required-field-color': invoiceForm?.get('taxRate')
+                        ?.invalid
                     }"
                   >
                     {{ invoiceForm?.get("taxRate")?.value }}&#37;
