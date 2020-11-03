@@ -4,9 +4,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LineItem } from 'src/app/core/invoice-form.service';
 
 export interface InputComponentData {
-  invoiceForm: FormGroup | undefined;
-  lineItemIndex: number;
+  inputField: InputField;
+  invoiceForm?: FormGroup | undefined;
+  lineItemIndex?: number;
 }
+
+type InputField = 'description' | 'billedTo' | 'line item' | 'tax rate';
 
 @Component({
   selector: 'app-input',
@@ -15,6 +18,7 @@ export interface InputComponentData {
 })
 export class InputComponent {
   action: 'add' | 'update';
+  inputField: InputField;
   invoiceForm: FormGroup = this.fb.group({
     invoiceNumber: ['000001'],
     description: ['', Validators.required],
@@ -44,6 +48,7 @@ export class InputComponent {
     public data: InputComponentData,
     private fb: FormBuilder
   ) {
+    this.inputField = this.data?.inputField;
     if (this.data?.invoiceForm) {
       this.invoiceForm = this.data.invoiceForm;
       this.lineItemIndex = this.data.lineItemIndex || 0;
@@ -57,7 +62,7 @@ export class InputComponent {
     return this.invoiceForm.get(['lineItems', this.lineItemIndex]);
   }
 
-  submit() {
+  close() {
     switch (this.action) {
       case 'update':
         this.dialogRef.close();

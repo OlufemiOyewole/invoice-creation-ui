@@ -101,7 +101,9 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
   }
 
   addLineItem() {
-    const dialogRef = this.dialog.open(InputComponent);
+    const dialogRef = this.dialog.open(InputComponent, {
+      data: { inputField: 'line item' } as InputComponentData,
+    });
 
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
@@ -111,11 +113,23 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
     });
   }
 
-  editLineItem(index: number) {
+  updateLineItem(index: number) {
     this.dialog.open(InputComponent, {
+      backdropClass: [],
       data: {
-        invoiceForm: this.invoiceFormService.invoiceForm,
+        inputField: 'line item',
         lineItemIndex: index,
+        invoiceForm: this.invoiceFormService.invoiceForm,
+      } as InputComponentData,
+    });
+  }
+
+  updateTaxRate() {
+    this.dialog.open(InputComponent, {
+      backdropClass: [],
+      data: {
+        inputField: 'tax rate',
+        invoiceForm: this.invoiceFormService.invoiceForm,
       } as InputComponentData,
     });
   }

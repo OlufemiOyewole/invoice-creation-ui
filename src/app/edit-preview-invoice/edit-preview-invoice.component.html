@@ -139,7 +139,7 @@
                       left: -40px;
                       background-color: white;
                     "
-                    (click)="editLineItem(i)"
+                    (click)="updateLineItem(i)"
                     color="accent"
                     appStopClickPropagation
                   >
@@ -212,6 +212,25 @@
             </mat-list-item>
             <mat-list-item>
               <div class="row">
+                <div class="edit-mode-item-container">
+                  <button
+                    mat-icon-button
+                    *ngIf="_editMode && showEditButtons"
+                    class="edit-mode-item mat-elevation-z1"
+                    style="
+                      top: 50%;
+                      transform: translateY(-50%);
+                      left: -40px;
+                      background-color: white;
+                    "
+                    (click)="updateTaxRate()"
+                    color="accent"
+                    appStopClickPropagation
+                  >
+                    <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+                  </button>
+                </div>
+
                 <span class="field-label"
                   >{{ invoiceForm?.get("taxRate")?.value }}&#37;&nbsp;Tax
                   :</span
