@@ -68,6 +68,7 @@ export class EditPreviewInvoiceComponent implements AfterViewInit {
   _editMode = false;
   displayToggleInfo = true;
   invoiceForm: FormGroup;
+  formTouched = false;
   invoiceWidth = 820;
   previewHeight = '0px';
   previewScale = 'translate(-50%, 0%) scale(1)';

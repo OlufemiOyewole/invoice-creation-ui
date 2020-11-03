@@ -23,6 +23,7 @@ export class AppComponent implements OnDestroy {
   smallScreenBreakpointObserver: Subscription;
   currentStepperIndex = 0;
   stepperIndexChecked = false;
+  blankForm = new FormGroup({});
 
   constructor(
     private invoiceFormService: InvoiceFormService,

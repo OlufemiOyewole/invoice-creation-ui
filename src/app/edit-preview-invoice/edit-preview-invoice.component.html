@@ -37,7 +37,25 @@
                   </button>
                 </div>
 
-                <span>{{ invoiceForm.get("description")?.value }}</span>
+                <ng-container
+                  *ngIf="
+                    invoiceForm.get('description')?.touched || formTouched;
+                    else description
+                  "
+                >
+                  <span *ngIf="invoiceForm.get('description')?.value">{{
+                    invoiceForm.get("description")?.value
+                  }}</span>
+                  <span
+                    *ngIf="!invoiceForm.get('description')?.value"
+                    class="required-field mat-subheading-2"
+                    >*</span
+                  >
+                </ng-container>
+
+                <ng-template #description>
+                  <span>{{ invoiceForm.get("description")?.value }}</span>
+                </ng-template>
               </div>
             </div>
           </div>
@@ -84,7 +102,25 @@
             </div>
 
             <div>
-              {{ invoiceForm.get("billedTo")?.value }}
+              <ng-container
+                *ngIf="
+                  invoiceForm.get('billedTo')?.touched || formTouched;
+                  else billedTo
+                "
+              >
+                <span *ngIf="invoiceForm.get('billedTo')?.value">{{
+                  invoiceForm.get("billedTo")?.value
+                }}</span>
+                <span
+                  *ngIf="!invoiceForm.get('billedTo')?.value"
+                  class="required-field mat-subheading-2"
+                  >*</span
+                >
+              </ng-container>
+
+              <ng-template #billedTo>
+                <span>{{ invoiceForm.get("billedTo")?.value }}</span>
+              </ng-template>
             </div>
           </div>
           <div style="flex: 1; text-align: right">
@@ -111,7 +147,7 @@
           </div>
         </section>
 
-        <section class="body">
+        <section class="preview-body">
           <mat-list>
             <mat-list-item class="line-item-header">
               <div class="row">
@@ -176,7 +212,15 @@
                 </div>
 
                 <span class="column-unit-cost">
-                  {{ lineItem.get("unitCost")?.value || 0 | currency }}
+                  <ng-container
+                    *ngIf="lineItem.get('unitCost')?.invalid; else unitCost"
+                  >
+                    <span class="required-field">*</span>
+                  </ng-container>
+
+                  <ng-template #unitCost>
+                    {{ lineItem.get("unitCost")?.value || 0 | currency }}
+                  </ng-template>
                 </span>
 
                 <span
@@ -218,7 +262,7 @@
             >
               <button
                 mat-button
-                class="edit-mode-item"
+                class="edit-mode-item mat-elevation-z1"
                 (click)="addLineItem()"
                 color="accent"
                 appStopClickPropagation
@@ -230,7 +274,7 @@
           </mat-list>
         </section>
 
-        <section class="summary" *ngIf="lineItems.controls.length">
+        <section class="summary">
           <mat-list style="width: 38%">
             <mat-list-item style="border-top: 1px solid lightgrey">
               <div class="row">
@@ -255,10 +299,16 @@
                   </button>
                 </div>
 
-                <span class="field-label"
-                  >{{ invoiceForm?.get("taxRate")?.value }}&#37;&nbsp;Tax
-                  :</span
-                >
+                <span class="field-label">
+                  <span
+                    [ngClass]="{
+                      'required-field': invoiceForm?.get('taxRate')?.invalid
+                    }"
+                  >
+                    {{ invoiceForm?.get("taxRate")?.value }}&#37;
+                  </span>
+                  &nbsp;Tax :
+                </span>
                 <span class="column-total">{{ taxAmount | currency }}</span>
               </div>
             </mat-list-item>

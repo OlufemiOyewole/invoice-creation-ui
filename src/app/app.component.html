@@ -7,7 +7,10 @@
 <mat-horizontal-stepper
   [ngClass]="{ 'big-screen': isBigScreen }"
   [selectedIndex]="currentStepperIndex"
-  (selectionChange)="currentStepperIndex = $event.selectedIndex"
+  (selectionChange)="
+    currentStepperIndex = $event.selectedIndex;
+    editPreviewInvoice.formTouched = true
+  "
   (click)="editPreviewInvoice.hideEditButtons()"
 >
   <mat-step
@@ -29,7 +32,10 @@
     </div>
   </mat-step>
 
-  <mat-step>
+  <mat-step
+    [stepControl]="isBigScreen ? invoiceForm : blankForm"
+    errorMessage=""
+  >
     <ng-template matStepLabel>{{
       isBigScreen ? "Edit & Preview" : "Preview"
     }}</ng-template>

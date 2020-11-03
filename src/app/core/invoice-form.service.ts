@@ -59,7 +59,7 @@ export class InvoiceFormService {
       this.fb.group({
         description: [values?.description, Validators.required],
         unitCost: [
-          values?.unitCost,
+          values?.unitCost || 0,
           [Validators.min(0), Validators.max(1000000000)],
         ],
         quantity: [
